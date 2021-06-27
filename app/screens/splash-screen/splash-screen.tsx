@@ -3,7 +3,6 @@ import { observer } from "mobx-react-lite"
 import React, { useEffect } from "react"
 import { Image, ImageStyle, TextStyle, ViewStyle } from "react-native"
 import { Screen, Text } from "../../components"
-import { translate } from "../../i18n/"
 import { color } from "../../theme"
 import { image } from "../../theme/image"
 
@@ -14,18 +13,17 @@ const TEXT_SLOGAN: TextStyle = { color: color.palette.black, fontSize: 20, fontS
 
 export const SplashScreen = observer(function SplashScreen() {
   const navigation = useNavigation()
-  const nextScreen = () => navigation.navigate("demo")
+  const nextScreen = () => { navigation.reset({ index: 0, routes: [{ name: 'login' }] }); }
 
   useEffect(() => {
-    setTimeout(()=>{
-      nextScreen()
-    }, 2000)
+    let timer1 = setTimeout(() => {  }, 5000)
+    return () => { clearTimeout(timer1); };
   })
 
   return (
     <Screen style={ROOT} preset="scroll">
       <Image source={image.img_logo_transparent} style={LOGO} />
-      <Text style={TEXT} preset="bold" text={translate("app.appName")} />
+      <Text style={TEXT} preset="bold" tx={'app.appName'} />
       <Text style={TEXT_SLOGAN} text="Kết nối đam mê" />
     </Screen>
   )

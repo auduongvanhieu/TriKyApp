@@ -38,7 +38,6 @@ export const RootNavigator = React.forwardRef<NavigationContainerRef,
 Partial<React.ComponentProps<typeof NavigationContainer>>>((props, ref) => {
   return (
     <NavigationContainer {...props} ref={ref}>
-      <StatusBar translucent={true} backgroundColor='transparent' />
       <RootStack />
     </NavigationContainer>
   )
