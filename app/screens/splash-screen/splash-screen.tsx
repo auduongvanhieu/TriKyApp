@@ -4,7 +4,7 @@ import React, { useEffect } from "react"
 import { Image, ImageStyle, TextStyle, ViewStyle } from "react-native"
 import { Screen, Text } from "../../components"
 import { color } from "../../theme"
-import { image } from "../../theme/image"
+import { images } from "../../theme/images"
 
 const ROOT: ViewStyle = { backgroundColor: color.palette.white, flex: 1, alignItems: 'center', justifyContent: 'center' }
 const LOGO: ImageStyle = { width: 200, height: 200, }
@@ -16,13 +16,13 @@ export const SplashScreen = observer(function SplashScreen() {
   const nextScreen = () => { navigation.reset({ index: 0, routes: [{ name: 'login' }] }); }
 
   useEffect(() => {
-    let timer1 = setTimeout(() => {  }, 5000)
+    let timer1 = setTimeout(() => { nextScreen() }, 2000)
     return () => { clearTimeout(timer1); };
   })
 
   return (
     <Screen style={ROOT} preset="scroll">
-      <Image source={image.img_logo_transparent} style={LOGO} />
+      <Image source={images.img_logo_transparent} style={LOGO} />
       <Text style={TEXT} preset="bold" tx={'app.appName'} />
       <Text style={TEXT_SLOGAN} text="Kết nối đam mê" />
     </Screen>

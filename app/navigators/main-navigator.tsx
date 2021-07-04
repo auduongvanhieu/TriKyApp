@@ -17,7 +17,7 @@ export function MainNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, }} >
       <Stack.Screen name="splash" component={SplashScreen} />
-      {/* <Stack.Screen name="login" component={LoginScreen} /> */}
+      <Stack.Screen name="login" component={LoginScreen} />
       {/* <Stack.Screen name="welcome" component={WelcomeScreen} /> */}
       {/* <Stack.Screen name="demo" component={DemoScreen} /> */}
       {/* <Stack.Screen name="demoList" component={DemoListScreen} /> */}

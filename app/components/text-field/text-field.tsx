@@ -1,21 +1,23 @@
 import React from "react"
 import { StyleProp, TextInput, TextInputProps, TextStyle, View, ViewStyle } from "react-native"
-import { color, spacing, typography } from "../../theme"
 import { translate, TxKeyPath } from "../../i18n"
-import { Text } from "../text/text"
+import { color, typography } from "../../theme"
 
 // the base styling for the container
 const CONTAINER: ViewStyle = {
-  paddingVertical: spacing[3],
+  borderColor: color.palette.black,
+  borderWidth: 1,
+  borderRadius: 4,
 }
 
 // the base styling for the TextInput
 const INPUT: TextStyle = {
   fontFamily: typography.primary,
   color: color.text,
-  minHeight: 44,
+  minHeight: 40,
   fontSize: 18,
-  backgroundColor: color.palette.white,
+  paddingHorizontal: 5,
+  paddingVertical: 5,
 }
 
 // currently we have no presets, but that changes quickly when you build your app.
@@ -33,16 +35,6 @@ export interface TextFieldProps extends TextInputProps {
    * The Placeholder text if no placeholderTx is provided.
    */
   placeholder?: string
-
-  /**
-   * The label i18n key.
-   */
-  labelTx?: TxKeyPath
-
-  /**
-   * The label text if no labelTx is provided.
-   */
-  label?: string
 
   /**
    * Optional container style overrides useful for margins & padding.
@@ -69,8 +61,6 @@ export function TextField(props: TextFieldProps) {
   const {
     placeholderTx,
     placeholder,
-    labelTx,
-    label,
     preset = "default",
     style: styleOverride,
     inputStyle: inputStyleOverride,
@@ -84,10 +74,9 @@ export function TextField(props: TextFieldProps) {
 
   return (
     <View style={containerStyles}>
-      <Text preset="fieldLabel" tx={labelTx} text={label} />
       <TextInput
         placeholder={actualPlaceholder}
-        placeholderTextColor={color.palette.lighterGrey}
+        placeholderTextColor={color.textHoder}
         underlineColorAndroid={color.transparent}
         {...rest}
         style={inputStyles}
