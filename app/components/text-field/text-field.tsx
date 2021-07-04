@@ -8,6 +8,7 @@ const CONTAINER: ViewStyle = {
   borderColor: color.palette.black,
   borderWidth: 1,
   borderRadius: 4,
+  flexDirection: 'row'
 }
 
 // the base styling for the TextInput
@@ -52,7 +53,10 @@ export interface TextFieldProps extends TextInputProps {
   preset?: keyof typeof PRESETS
 
   forwardedRef?: any
+  componentLeft?: any
+  componentRight?: any
 }
+
 
 /**
  * A component which has a label and an input together.
@@ -65,6 +69,8 @@ export function TextField(props: TextFieldProps) {
     style: styleOverride,
     inputStyle: inputStyleOverride,
     forwardedRef,
+    componentLeft,
+    componentRight,
     ...rest
   } = props
 
@@ -74,6 +80,7 @@ export function TextField(props: TextFieldProps) {
 
   return (
     <View style={containerStyles}>
+      {componentLeft}
       <TextInput
         placeholder={actualPlaceholder}
         placeholderTextColor={color.textHolder}
@@ -82,6 +89,7 @@ export function TextField(props: TextFieldProps) {
         style={inputStyles}
         ref={forwardedRef}
       />
+      {componentRight}
     </View>
   )
 }

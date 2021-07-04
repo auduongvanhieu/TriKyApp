@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { observer } from "mobx-react-lite"
 import { View, ViewStyle, TouchableOpacity } from "react-native"
 import { Button, Screen, Text, TextField } from "../../components"
@@ -12,7 +12,9 @@ const ROOT: ViewStyle = {
 
 export const LoginScreen = observer(function LoginScreen() {
 
-  
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+
 
   return (
     <Screen style={ROOT} preset="scroll">
@@ -21,9 +23,9 @@ export const LoginScreen = observer(function LoginScreen() {
       </View>
       <View style={{ flex: 1, marginHorizontal: metrics.baseMargin }}>
         <Text preset="default" text="Số điện thoại" />
-        <TextField placeholder='Nhập số điện thoại' />
+        <TextField placeholder='Nhập số điện thoại' onChangeText={phone => setPhone(phone)} defaultValue={phone} keyboardType='number-pad' />
         <Text preset="default" text="Mật khẩu" style={{ marginTop: 10 }} />
-        <TextField placeholder='Nhập mật khẩu' />
+        <TextField placeholder='Nhập mật khẩu' onChangeText={password => setPassword(password)} defaultValue={password} secureTextEntry={true}/>
         <View style={{marginTop: 15}}>
           <Button text="ĐĂNG NHẬP" style={{ backgroundColor: 'black', height: 40 }} textStyle={{ fontSize: 15 }} />
         </View>
@@ -37,7 +39,8 @@ export const LoginScreen = observer(function LoginScreen() {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{ flex: 1, justifyContent: 'center', marginHorizontal: metrics.baseMargin }}>
+      <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', marginHorizontal: metrics.baseMargin }}>
+        <Text preset="default" text="version: 1.0.0" style={{fontSize: 12}} />
       </View>
     </Screen>
   )
