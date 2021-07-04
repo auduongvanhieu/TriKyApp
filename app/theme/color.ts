@@ -1,8 +1,8 @@
 import { palette } from "./palette"
 
 export const color = {
-  primary: "#DDD000",
-  main: "#FFF000",
+  primary: "#00D6D6",
+  main: "#00FFFF",
   primaryDarker: palette.orangeDarker,
   palette,
   transparent: "rgba(0, 0, 0, 0)",

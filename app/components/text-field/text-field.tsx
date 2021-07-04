@@ -8,7 +8,8 @@ const CONTAINER: ViewStyle = {
   borderColor: color.palette.black,
   borderWidth: 1,
   borderRadius: 4,
-  flexDirection: 'row'
+  flexDirection: 'row',
+  alignItems: 'center'
 }
 
 // the base styling for the TextInput

@@ -4,6 +4,7 @@ import { View, ViewStyle, TouchableOpacity } from "react-native"
 import { Button, Screen, Text, TextField } from "../../components"
 import { color } from "../../theme"
 import metrics from "../../theme/metrics"
+import { Icon } from "react-native-elements/dist/icons/Icon"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.main,
@@ -23,9 +24,13 @@ export const LoginScreen = observer(function LoginScreen() {
       </View>
       <View style={{ flex: 1, marginHorizontal: metrics.baseMargin }}>
         <Text preset="default" text="Số điện thoại" />
-        <TextField placeholder='Nhập số điện thoại' onChangeText={phone => setPhone(phone)} defaultValue={phone} keyboardType='number-pad' />
+        <TextField
+          componentLeft={<Icon type='font-awesome-5' name='user-tie' containerStyle={{marginStart: 5}} size={16}/>}
+          placeholder='Nhập số điện thoại' onChangeText={phone => setPhone(phone)} defaultValue={phone} keyboardType='number-pad' />
         <Text preset="default" text="Mật khẩu" style={{ marginTop: 10 }} />
-        <TextField placeholder='Nhập mật khẩu' onChangeText={password => setPassword(password)} defaultValue={password} secureTextEntry={true}/>
+        <TextField
+          componentLeft={<Icon type='font-awesome-5' name='lock' containerStyle={{marginStart: 5}} size={16}/>}
+          placeholder='Nhập mật khẩu' onChangeText={password => setPassword(password)} defaultValue={password} secureTextEntry={true}/>
         <View style={{marginTop: 15}}>
           <Button text="ĐĂNG NHẬP" style={{ backgroundColor: 'black', height: 40 }} textStyle={{ fontSize: 15 }} />
         </View>
