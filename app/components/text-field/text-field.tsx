@@ -15,7 +15,7 @@ const INPUT: TextStyle = {
   fontFamily: typography.primary,
   color: color.text,
   minHeight: 40,
-  fontSize: 18,
+  fontSize: 15,
   paddingHorizontal: 5,
   paddingVertical: 5,
 }
@@ -76,7 +76,7 @@ export function TextField(props: TextFieldProps) {
     <View style={containerStyles}>
       <TextInput
         placeholder={actualPlaceholder}
-        placeholderTextColor={color.textHoder}
+        placeholderTextColor={color.textHolder}
         underlineColorAndroid={color.transparent}
         {...rest}
         style={inputStyles}
