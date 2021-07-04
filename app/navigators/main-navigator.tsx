@@ -1,6 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
-import { DemoListScreen, DemoScreen, LoginScreen, SplashScreen, WelcomeScreen } from "../screens"
+import { DemoListScreen, DemoScreen, HistoryScreen, HomeScreen, LoginScreen, SplashScreen, WelcomeScreen } from "../screens"
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 export type PrimaryParamList = {
   splash: undefined
@@ -10,14 +11,24 @@ export type PrimaryParamList = {
   demoList: undefined
 }
 
-// Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createStackNavigator<PrimaryParamList>()
+const Tab = createMaterialTopTabNavigator();
+
+function MainTabs() {
+  return (
+    <Tab.Navigator tabBarPosition='bottom'>
+      <Tab.Screen name="Trang chủ" component={HomeScreen} />
+      <Tab.Screen name="Lịch sử" component={HistoryScreen} />
+    </Tab.Navigator>
+  );
+}
 
 export function MainNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, }} >
       <Stack.Screen name="splash" component={SplashScreen} />
       <Stack.Screen name="login" component={LoginScreen} />
+      <Stack.Screen name="main" component={MainTabs} />
       {/* <Stack.Screen name="welcome" component={WelcomeScreen} /> */}
       {/* <Stack.Screen name="demo" component={DemoScreen} /> */}
       {/* <Stack.Screen name="demoList" component={DemoListScreen} /> */}
