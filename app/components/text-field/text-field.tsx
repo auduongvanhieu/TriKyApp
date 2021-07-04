@@ -20,6 +20,8 @@ const INPUT: TextStyle = {
   fontSize: 15,
   paddingHorizontal: 5,
   paddingVertical: 5,
+  flexGrow: 1,
+  flexShrink: 1
 }
 
 // currently we have no presets, but that changes quickly when you build your app.

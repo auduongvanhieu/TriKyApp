@@ -15,7 +15,7 @@ export const LoginScreen = observer(function LoginScreen() {
 
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-
+  const [isShowPassword, setShowPassword] = useState(false);
 
   return (
     <Screen style={ROOT} preset="scroll">
@@ -30,7 +30,8 @@ export const LoginScreen = observer(function LoginScreen() {
         <Text preset="default" text="Mật khẩu" style={{ marginTop: 10 }} />
         <TextField
           componentLeft={<Icon type='font-awesome-5' name='lock' containerStyle={{marginStart: 5}} size={16}/>}
-          placeholder='Nhập mật khẩu' onChangeText={password => setPassword(password)} defaultValue={password} secureTextEntry={true}/>
+          componentRight={<Icon onPress={()=>setShowPassword(!isShowPassword)} type='entypo' name={isShowPassword?'eye':'eye-with-line'} containerStyle={{marginEnd: 5}} size={18}/>}
+          placeholder='Nhập mật khẩu' onChangeText={password => setPassword(password)} defaultValue={password} secureTextEntry={!isShowPassword}/>
         <View style={{marginTop: 15}}>
           <Button text="ĐĂNG NHẬP" style={{ backgroundColor: 'black', height: 40 }} textStyle={{ fontSize: 15 }} />
         </View>
