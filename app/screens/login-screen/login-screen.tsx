@@ -19,7 +19,9 @@ export const LoginScreen = observer(function LoginScreen() {
   const [isShowPassword, setShowPassword] = useState(false);
 
   const navigation = useNavigation()
-  const goToMain = () => { navigation.reset({ index: 0, routes: [{ name: 'main' }] }); }
+  const goToMain = () => { navigation.navigate("main") }
+
+  
 
   return (
     <Screen style={ROOT} preset="scroll">

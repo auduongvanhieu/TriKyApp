@@ -13,7 +13,7 @@ const TEXT_SLOGAN: TextStyle = { color: color.palette.black, fontSize: 20, fontS
 
 export const SplashScreen = observer(function SplashScreen() {
   const navigation = useNavigation()
-  const nextScreen = () => { navigation.reset({ index: 0, routes: [{ name: 'login' }] }); }
+  const nextScreen = () => { navigation.navigate("login") }
 
   useEffect(() => {
     let timer1 = setTimeout(() => { nextScreen() }, 2000)
