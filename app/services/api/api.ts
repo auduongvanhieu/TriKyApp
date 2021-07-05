@@ -65,7 +65,7 @@ export class Api {
   /**
    * Login
    */
-  async login(body: any): Promise<Types.GetUserResult> {
+  async login(body: any): Promise<any> {
     const response: ApiResponse<any> = await this.apisauce.post(`/login`, body)
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
@@ -73,7 +73,7 @@ export class Api {
     }
     try {
       const res: any = response.data
-      return { kind: "ok", user: res.token }
+      return { kind: "ok", data: res }
     } catch {
       return { kind: "bad-data" }
     }

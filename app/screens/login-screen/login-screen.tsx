@@ -6,6 +6,8 @@ import { color } from "../../theme"
 import metrics from "../../theme/metrics"
 import { Icon } from "react-native-elements/dist/icons/Icon"
 import { useNavigation } from "@react-navigation/native"
+import { Api } from "../../services/api"
+import { save } from "../../utils/storage"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.main,
@@ -13,15 +15,24 @@ const ROOT: ViewStyle = {
 }
 
 export const LoginScreen = observer(function LoginScreen() {
-
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
+  
+  const [phone, setPhone] = useState('0909000100');
+  const [password, setPassword] = useState('12345');
   const [isShowPassword, setShowPassword] = useState(false);
 
   const navigation = useNavigation()
   const goToMain = () => { navigation.navigate("main") }
 
-  
+  const login = React.useMemo(
+    () => async () => {
+      const api = new Api()
+      api.setup()
+      let res = await api.login({phone,password})
+      await save("token", res?.token)
+      await save("user", res?.user)
+    },
+    {},
+  )
 
   return (
     <Screen style={ROOT} preset="scroll">
