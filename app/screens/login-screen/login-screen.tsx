@@ -28,10 +28,11 @@ export const LoginScreen = observer(function LoginScreen() {
       const api = new Api()
       api.setup()
       let res = await api.login({phone,password})
+      console.log('hieunv', 'loginRes', res);
       await save("token", res?.token)
       await save("user", res?.user)
     },
-    {},
+    [],
   )
 
   return (
@@ -50,7 +51,7 @@ export const LoginScreen = observer(function LoginScreen() {
           componentRight={<Icon onPress={()=>setShowPassword(!isShowPassword)} type='entypo' name={isShowPassword?'eye':'eye-with-line'} containerStyle={{marginEnd: 5}} size={18}/>}
           placeholder='Nhập mật khẩu' onChangeText={password => setPassword(password)} defaultValue={password} secureTextEntry={!isShowPassword}/>
         <View style={{marginTop: 15}}>
-          <Button onPress={goToMain} text="ĐĂNG NHẬP" style={{ backgroundColor: 'black', height: 40 }} textStyle={{ fontSize: 15 }} />
+          <Button onPress={login} text="ĐĂNG NHẬP" style={{ backgroundColor: 'black', height: 40 }} textStyle={{ fontSize: 15 }} />
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
           <TouchableOpacity style={{flex: 1, alignItems: 'center', paddingVertical: 5}}>
