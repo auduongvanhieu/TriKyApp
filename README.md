@@ -47,3 +47,5 @@ ignite-project
 └── package.json
 - ignite generate screen
 - ignite generate component
+- ignite generate navigator
+- ignite generate model

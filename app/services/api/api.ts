@@ -66,13 +66,16 @@ export class Api {
    * Login
    */
   async login(body: any): Promise<any> {
+    console.log('hieunv', 'login_params', body);
     const response: ApiResponse<any> = await this.apisauce.post(`/login`, body)
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
+      console.log('hieunv', 'login_problem', problem);
       if (problem) return problem
     }
     try {
       const res: any = response.data
+      console.log('hieunv', 'login_res', res);
       return { kind: "ok", data: res }
     } catch {
       return { kind: "bad-data" }

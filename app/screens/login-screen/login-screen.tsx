@@ -23,17 +23,15 @@ export const LoginScreen = observer(function LoginScreen() {
   const navigation = useNavigation()
   const goToMain = () => { navigation.navigate("main") }
 
-  const login = React.useMemo(
-    () => async () => {
-      const api = new Api()
-      api.setup()
-      let res = await api.login({phone,password})
-      console.log('hieunv', 'loginRes', res);
-      await save("token", res?.token)
-      await save("user", res?.user)
-    },
-    [],
-  )
+  const login = () => async () => {
+    await save("", "Boaty McBoatface")
+    const api = new Api()
+    api.setup()
+    let res = await api.login({phone,password})
+    console.log('hieunv', 'loginRes', res);
+    await save("token", res?.token)
+    await save("user", res?.user)
+  }
 
   return (
     <Screen style={ROOT} preset="scroll">
