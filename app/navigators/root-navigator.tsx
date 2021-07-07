@@ -2,6 +2,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
+import { Loading } from '../components'
 import { HistoryScreen, HomeScreen, LoginScreen, SplashScreen } from "../screens"
 import { MainNavigator } from "./main-navigator"
 
@@ -35,11 +36,13 @@ const RootStack = () => {
   )
 }
 
+const isLoading = false
 export const RootNavigator = React.forwardRef<NavigationContainerRef, 
 Partial<React.ComponentProps<typeof NavigationContainer>>>((props, ref) => {
   return (
     <NavigationContainer {...props} ref={ref}>
       <RootStack />
+      {isLoading && <Loading/>}
     </NavigationContainer>
   )
 })
