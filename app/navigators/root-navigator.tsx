@@ -1,34 +1,35 @@
-/**
- * The root navigator is used to switch between major navigation flows of your app.
- * Generally speaking, it will contain an auth flow (registration, login, forgot password)
- * and a "main" flow (which is contained in your MainNavigator) which the user
- * will use once logged in.
- */
-import React from "react"
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
+import React from "react"
+import { HistoryScreen, HomeScreen, LoginScreen, SplashScreen } from "../screens"
 import { MainNavigator } from "./main-navigator"
-import { StatusBar } from "react-native"
 
-/**
- * This type allows TypeScript to know what routes are defined in this navigator
- * as well as what properties (if any) they might take when navigating to them.
- *
- * We recommend using MobX-State-Tree store(s) to handle state rather than navigation params.
- *
- * For more information, see this documentation:
- *   https://reactnavigation.org/docs/params/
- *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
- */
 export type RootParamList = {
-  mainStack: undefined
+  splash: undefined,
+  login: undefined,
+  main: undefined,
+  mainStack: undefined,
 }
 
 const Stack = createStackNavigator<RootParamList>()
+const Tab = createMaterialTopTabNavigator();
+
+function MainTabs() {
+  return (
+    <Tab.Navigator tabBarPosition='bottom'>
+      <Tab.Screen name="Trang chủ" component={HomeScreen} />
+      <Tab.Screen name="Lịch sử" component={HistoryScreen} />
+    </Tab.Navigator>
+  );
+}
 
 const RootStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, }} >
+      <Stack.Screen name="splash" component={SplashScreen} />
+      <Stack.Screen name="login" component={LoginScreen} />
+      <Stack.Screen name="main" component={MainTabs} />
       <Stack.Screen name="mainStack" component={MainNavigator} options={{ headerShown: false, }} />
     </Stack.Navigator>
   )
