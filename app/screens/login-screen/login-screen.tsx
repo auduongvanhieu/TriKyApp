@@ -24,16 +24,10 @@ export const LoginScreen = observer(function LoginScreen() {
   const navigation = useNavigation()
   const goToMain = () => { navigation.navigate("main") }
 
-  const { appStore } = useStores()
-
   const login = async () => {
-    appStore.showLoading()
     const api = new Api()
     api.setup()
     let res = await api.login({phone,password})
-    setTimeout(()=>{
-      appStore.hideLoading()
-    },3000)
     console.log('hieunv', 'loginRes', res);
     await save("token", res?.token)
     await save("user", res?.user)

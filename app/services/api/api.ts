@@ -2,6 +2,7 @@ import { ApisauceInstance, create, ApiResponse } from "apisauce"
 import { getGeneralApiProblem } from "./api-problem"
 import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
 import * as Types from "./api.types"
+import { rootStoreRef } from "../../app"
 
 export class Api {
   apisauce: ApisauceInstance
@@ -67,7 +68,9 @@ export class Api {
    */
   async login(body: any): Promise<any> {
     console.log('hieunv', 'login_params', body);
+    rootStoreRef.appStore.showLoading()
     const response: ApiResponse<any> = await this.apisauce.post(`/login`, body)
+    rootStoreRef.appStore.hideLoading()
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
       console.log('hieunv', 'login_problem', problem);
