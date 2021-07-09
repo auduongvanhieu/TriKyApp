@@ -1,10 +1,9 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
-import React, { useEffect } from "react"
-import { Loading } from '../components'
-import { useStores } from '../models'
+import React from "react"
 import { HistoryScreen, HomeScreen, LoginScreen, SplashScreen } from "../screens"
+import { AppAction } from '../services/app-action/app-action'
 import { MainNavigator } from "./main-navigator"
 
 export type RootParamList = {
@@ -40,16 +39,10 @@ const RootStack = () => {
 export const RootNavigator = React.forwardRef<NavigationContainerRef, 
 Partial<React.ComponentProps<typeof NavigationContainer>>>((props, ref) => {
 
-  const { appStore } = useStores()
-  const { isLoading } = appStore
-
-  useEffect(() => {
-    appStore.hideLoading()
-  },)
   return (
     <NavigationContainer {...props} ref={ref}>
       <RootStack />
-      {isLoading && <Loading/>}
+      <AppAction />
     </NavigationContainer>
   )
 })
