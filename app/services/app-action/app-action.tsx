@@ -24,7 +24,7 @@ export const AppAction = observer(function AppAction() {
       dropdownRef.current.alertWithType(dropdownAlert.type, dropdownAlert.title, dropdownAlert.description)
       appStore.resetAlert()
     }
-  })
+  }, [dropdownAlert.type])
 
   return (
     <>

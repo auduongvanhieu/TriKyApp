@@ -79,7 +79,6 @@ export class Api {
       rootStoreRef.appStore.showSuccessAlert({description: "Đăng nhập thành công"})
       return { kind: "ok", data: res }
     } catch {
-      rootStoreRef.appStore.showSuccessAlert({description: "Có lỗi ngoại lệ đã xảy ra"})
       return { kind: "bad-data" }
     }
   }
