@@ -47,14 +47,19 @@ export type GeneralApiProblem =
 export function getGeneralApiProblem(response: ApiResponse<any>): GeneralApiProblem | void {
   switch (response.problem) {
     case "CONNECTION_ERROR":
+      rootStoreRef.appStore.showErrorAlert({description: "Lỗi internet, vui lòng kiểm tra lại kết nối"})
       return { kind: "cannot-connect", temporary: true }
     case "NETWORK_ERROR":
+      rootStoreRef.appStore.showErrorAlert({description: "Lỗi internet, vui lòng kiểm tra lại kết nối"})
       return { kind: "cannot-connect", temporary: true }
     case "TIMEOUT_ERROR":
+      rootStoreRef.appStore.showErrorAlert({description: "Quá thời gian kết nối, vui lòng tải lại"})
       return { kind: "timeout", temporary: true }
     case "SERVER_ERROR":
+      rootStoreRef.appStore.showErrorAlert({description: "Lỗi kết nối server, vui lòng liên hệ nhà phát triển để kiểm tra lại server"})
       return { kind: "server" }
     case "UNKNOWN_ERROR":
+      rootStoreRef.appStore.showErrorAlert({description: "Lỗi không xác định"})
       return { kind: "unknown", temporary: true }
     case "CLIENT_ERROR":
       rootStoreRef.appStore.showErrorAlert({description: response?.data?.errors?.msg})
