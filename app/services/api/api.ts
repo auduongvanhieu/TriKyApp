@@ -23,7 +23,7 @@ export class Api {
   }
 
   /**
-   * Gets a list of users.
+   * Demo: Gets a list of users.
    */
   async getUsers(): Promise<Types.GetUsersResult> {
     const response: ApiResponse<any> = await this.apisauce.get(`/users`)
@@ -44,7 +44,7 @@ export class Api {
   }
 
   /**
-   * Gets a single user by ID
+   * Demo: Gets a single user by ID
    */
   async getUser(id: string): Promise<Types.GetUserResult> {
     const response: ApiResponse<any> = await this.apisauce.get(`/users/${id}`)
@@ -53,10 +53,7 @@ export class Api {
       if (problem) return problem
     }
     try {
-      const resultUser: Types.User = {
-        id: response.data.id,
-        name: response.data.name,
-      }
+      const resultUser: Types.User = { id: response.data.id, name: response.data.name, }
       return { kind: "ok", user: resultUser }
     } catch {
       return { kind: "bad-data" }
@@ -79,8 +76,10 @@ export class Api {
     try {
       const res: any = response.data
       console.log('hieunv', 'login_res', res);
+      rootStoreRef.appStore.showSuccessAlert({description: "Đăng nhập thành công"})
       return { kind: "ok", data: res }
     } catch {
+      rootStoreRef.appStore.showSuccessAlert({description: "Có lỗi ngoại lệ đã xảy ra"})
       return { kind: "bad-data" }
     }
   }

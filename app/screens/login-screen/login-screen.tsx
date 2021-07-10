@@ -8,7 +8,6 @@ import { Icon } from "react-native-elements/dist/icons/Icon"
 import { useNavigation } from "@react-navigation/native"
 import { Api } from "../../services/api"
 import { save } from "../../utils/storage"
-import { useStores } from "../../models"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.main,
