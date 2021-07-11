@@ -61,12 +61,14 @@ export const LoginScreen = observer(function LoginScreen() {
         {/* Số điện thoại */}
         <Text preset="default" text="Số điện thoại" />
         <TextField
+          style={{marginTop: 5}}
           componentLeft={<Icon type='font-awesome-5' name='user-tie' containerStyle={{ marginStart: 5 }} size={16} />}
           placeholder='Nhập số điện thoại' onChangeText={phone => setPhone(phone)} defaultValue={phone} keyboardType='number-pad' />
         <WarnText preset="default" text={warnPhone} />
         {/* Mật khẩu */}
         <Text preset="default" text="Mật khẩu" style={{ marginTop: 10 }} />
         <TextField
+          style={{marginTop: 5}}
           componentLeft={<Icon type='font-awesome-5' name='lock' containerStyle={{ marginStart: 5 }} size={16} />}
           componentRight={<Icon onPress={() => setShowPassword(!isShowPassword)} type='entypo' name={isShowPassword ? 'eye' : 'eye-with-line'} containerStyle={{ marginEnd: 5 }} size={18} />}
           placeholder='Nhập mật khẩu' onChangeText={password => setPassword(password)} defaultValue={password} secureTextEntry={!isShowPassword} />

@@ -6,6 +6,7 @@ import { color } from "../../theme"
 import { Icon } from "react-native-elements"
 import metrics from "../../theme/metrics"
 import { WarnText } from "../../components/text/warn-text"
+import { useNavigation } from "@react-navigation/native"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.main,
@@ -13,7 +14,11 @@ const ROOT: ViewStyle = {
 }
 
 export const RegisterStep1Screen = observer(function RegisterStep1Screen() {
-  const [phone, setPhone] = useState('');
+
+  const navigation = useNavigation()
+  const goToRegisterStep2 = () => { navigation.navigate("registerStep2") }
+
+  const [phone, setPhone] = useState('0909000101');
   const [warnPhone, setWarnPhone] = useState(undefined);
 
   const checkValidInput = () => {
@@ -28,7 +33,7 @@ export const RegisterStep1Screen = observer(function RegisterStep1Screen() {
 
   const getOtpRequest = async () => {
     if (checkValidInput()) {
-      
+      goToRegisterStep2()
     }
   }
 
@@ -40,10 +45,10 @@ export const RegisterStep1Screen = observer(function RegisterStep1Screen() {
       <View style={{ flex: 1, marginHorizontal: metrics.baseMargin }}>
         <Text preset="default" text="Số điện thoại" />
         <TextField
+          style={{marginTop: 5}}
           componentLeft={<Icon type='font-awesome-5' name='user-tie' containerStyle={{ marginStart: 5 }} size={16} />}
           placeholder='Nhập số điện thoại' onChangeText={phone => setPhone(phone)} defaultValue={phone} keyboardType='number-pad' />
         <WarnText preset="default" text={warnPhone} />
-
       </View>
       <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', marginHorizontal: metrics.baseMargin }}>
         <Button onPress={getOtpRequest} text="BƯỚC TIẾP THEO" style={{ backgroundColor: 'black', height: 40, marginBottom: 20 }} textStyle={{ fontSize: 15 }} />
