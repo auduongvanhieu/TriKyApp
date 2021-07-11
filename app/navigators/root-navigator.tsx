@@ -1,15 +1,16 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import { NavigationContainer, NavigationContainerRef, useNavigation } from "@react-navigation/native"
+import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { BackHandler, Platform, ToastAndroid } from 'react-native'
-import { HistoryScreen, HomeScreen, LoginScreen, SplashScreen } from "../screens"
+import { HistoryScreen, HomeScreen, LoginScreen, RegisterStep1Screen, SplashScreen } from "../screens"
 import { AppAction } from '../services/app-action/app-action'
 import { MainNavigator } from "./main-navigator"
 
 export type RootParamList = {
   splash: undefined,
   login: undefined,
+  registerStep1: undefined,
   main: undefined,
   mainStack: undefined,
 }
@@ -31,6 +32,7 @@ const RootStack = () => {
     <Stack.Navigator screenOptions={{ headerShown: false, }} >
       <Stack.Screen name="splash" component={SplashScreen} />
       <Stack.Screen name="login" component={LoginScreen} />
+      <Stack.Screen name="registerStep1" component={RegisterStep1Screen} />
       <Stack.Screen name="main" component={MainTabs} />
       <Stack.Screen name="mainStack" component={MainNavigator} options={{ headerShown: false, }} />
     </Stack.Navigator>

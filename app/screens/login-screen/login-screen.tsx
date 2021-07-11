@@ -7,7 +7,6 @@ import metrics from "../../theme/metrics"
 import { Icon } from "react-native-elements/dist/icons/Icon"
 import { useNavigation } from "@react-navigation/native"
 import { Api } from "../../services/api"
-import { save } from "../../utils/storage"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.main,
@@ -22,14 +21,16 @@ export const LoginScreen = observer(function LoginScreen() {
 
   const navigation = useNavigation()
   const goToMain = () => { navigation.navigate("main") }
+  const goToRegister = () => { navigation.navigate("registerStep1") }
 
   const login = async () => {
     const api = new Api()
     api.setup()
     let res = await api.login({phone,password})
+    if(res.kind == 'ok'){
+      goToMain()
+    }
     console.log('hieunv', 'loginRes', res);
-    await save("token", res?.token)
-    await save("user", res?.user)
   }
 
   return (
@@ -51,7 +52,7 @@ export const LoginScreen = observer(function LoginScreen() {
           <Button onPress={login} text="ĐĂNG NHẬP" style={{ backgroundColor: 'black', height: 40 }} textStyle={{ fontSize: 15 }} />
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-          <TouchableOpacity style={{flex: 1, alignItems: 'center', paddingVertical: 5}}>
+          <TouchableOpacity onPress={goToRegister} style={{flex: 1, alignItems: 'center', paddingVertical: 5}}>
             <Text preset="bold" text="TẠO TÀI KHOẢN" />
           </TouchableOpacity>
           <Text preset="bold" text="|" />
