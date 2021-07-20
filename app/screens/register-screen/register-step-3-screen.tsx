@@ -1,9 +1,10 @@
 import { observer } from "mobx-react-lite"
-import React, { useState } from "react"
-import { View, ViewStyle } from "react-native"
+import React, { useEffect, useState } from "react"
+import { FlatList, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Icon } from "react-native-elements"
 import { Button, Screen, Text, TextField } from "../../components"
 import { WarnText } from "../../components/text/warn-text"
+import { useStores } from "../../models"
 import { color } from "../../theme"
 import metrics from "../../theme/metrics"
 
@@ -23,6 +24,17 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
   const [warnName, setWarnName] = useState(undefined);
   const [hobbies, setHobbies] = useState([]);
   const [warnHobbies, setWarnHobbies] = useState(undefined);
+
+  const { generalStore } = useStores()
+  const { categories } = generalStore
+
+  useEffect(() => {
+    async function getCategories() {
+      await generalStore.getCategories()
+    }
+
+    getCategories()
+  })
 
   const checkValidInput = () => {
     var isValid = true
@@ -83,6 +95,14 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
         <WarnText preset="default" text={warnPasswordRetype} />
         {/* Sở thích */}
         <Text preset="default" text="Sở thích" style={{ marginTop: 10 }} />
+        <FlatList
+          keyExtractor={(item) => String(item._id)}
+          data={categories}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={{}}>
+              <Text style={{}}>{item.name}</Text>
+            </TouchableOpacity>
+          )} />
       </View>
       <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', marginHorizontal: metrics.baseMargin }}>
         <Button onPress={nextStep} text="XÁC NHẬN" style={{ backgroundColor: 'black', height: 40, marginBottom: 20 }} textStyle={{ fontSize: 15 }} />

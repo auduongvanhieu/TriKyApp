@@ -1,3 +1,4 @@
+import { GeneralStoreModel } from "../general-store/general-store"
 import { AuthStoreModel } from "../auth-store/auth-store"
 import { AppStoreModel } from "../app-store/app-store"
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
@@ -8,6 +9,7 @@ import { CharacterStoreModel } from "../character-store/character-store"
  */
 // prettier-ignore
 export const RootStoreModel = types.model("RootStore").props({
+  generalStore: types.optional(GeneralStoreModel, {}),
   authStore: types.optional(AuthStoreModel, {}),
   appStore: types.optional(AppStoreModel, {}),
   characterStore: types.optional(CharacterStoreModel, {} as any),

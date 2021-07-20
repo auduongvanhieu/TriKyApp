@@ -7,6 +7,7 @@ import { Icon } from "react-native-elements"
 import metrics from "../../theme/metrics"
 import { WarnText } from "../../components/text/warn-text"
 import { useNavigation } from "@react-navigation/native"
+import { RegisterModel } from "../../models/request-models/RegisterModel"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.main,
@@ -33,6 +34,7 @@ export const RegisterStep1Screen = observer(function RegisterStep1Screen() {
 
   const getOtpRequest = async () => {
     if (checkValidInput()) {
+      RegisterModel.phone = phone
       goToRegisterStep2()
     }
   }
@@ -45,7 +47,7 @@ export const RegisterStep1Screen = observer(function RegisterStep1Screen() {
       <View style={{ flex: 1, marginHorizontal: metrics.baseMargin }}>
         <Text preset="default" text="Số điện thoại" />
         <TextField
-          style={{marginTop: 5}}
+          style={{ marginTop: 5 }}
           componentLeft={<Icon type='font-awesome-5' name='user-tie' containerStyle={{ marginStart: 5 }} size={16} />}
           placeholder='Nhập số điện thoại' onChangeText={phone => setPhone(phone)} defaultValue={phone} keyboardType='number-pad' />
         <WarnText preset="default" text={warnPhone} />
