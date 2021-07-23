@@ -87,7 +87,8 @@ export class Api {
    * Get categories
    */
   async getCategories(params: any): Promise<any> {
-    rootStoreRef.appStore.showLoading()
+    if(params.showLoading)
+      rootStoreRef.appStore.showLoading()
     const response: ApiResponse<any> = await this.apisauce.get(`/categories/all`)
     rootStoreRef.appStore.hideLoading()
     if (!response.ok) {

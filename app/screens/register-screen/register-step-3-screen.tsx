@@ -30,9 +30,8 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
 
   useEffect(() => {
     async function getCategories() {
-      await generalStore.getCategories()
+      await generalStore.getCategories({showLoading: true})
     }
-
     getCategories()
   })
 
@@ -40,7 +39,7 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
     var isValid = true
     setWarnPassword(undefined)
     if (password.length < 6) {
-      setWarnPassword('Vui lòng nhập password có ít nhất 5 ký tự')
+      setWarnPassword('Vui lòng nhập password có ít nhất 6 ký tự')
       isValid = false
     }
     if (password != passwordRetype) {

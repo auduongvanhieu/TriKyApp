@@ -18,7 +18,7 @@ export const LoginScreen = observer(function LoginScreen() {
 
   const [phone, setPhone] = useState('0909000100');
   const [warnPhone, setWarnPhone] = useState(undefined);
-  const [password, setPassword] = useState('12345');
+  const [password, setPassword] = useState('123456');
   const [warnPassword, setWarnPassword] = useState(undefined);
   const [isShowPassword, setShowPassword] = useState(false);
 
@@ -34,8 +34,8 @@ export const LoginScreen = observer(function LoginScreen() {
       setWarnPhone('Vui lòng nhập đúng số điện thoại')
       isValid = false
     }
-    if (password.length < 5) {
-      setWarnPassword('Vui lòng nhập password có ít nhất 5 ký tự')
+    if (password.length < 6) {
+      setWarnPassword('Vui lòng nhập password có ít nhất 6 ký tự')
       isValid = false
     }
     return isValid
