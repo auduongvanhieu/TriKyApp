@@ -9,8 +9,8 @@ export const GeneralStoreModel = types
   })
   .extend(withEnvironment)
   .actions((self) => ({
-    saveCategories: (categories: any) => {
-      self.categories.replace(categories)
+    saveCategories: (categoriesSnapshots: any) => {
+      self.categories.replace(categoriesSnapshots)
     },
   }))
   .actions((self) => ({

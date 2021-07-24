@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 import { FlatList, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Icon } from "react-native-elements"
 import { Button, Screen, Text, TextField } from "../../components"
+import { CategoryItem } from "../../components/common/category-item"
 import { WarnText } from "../../components/text/warn-text"
 import { useStores } from "../../models"
 import { color } from "../../theme"
@@ -14,10 +15,10 @@ const ROOT: ViewStyle = {
 }
 
 export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
-  const [password, setPassword] = useState('12345');
+  const [password, setPassword] = useState('123456');
   const [warnPassword, setWarnPassword] = useState(undefined);
   const [isShowPassword, setShowPassword] = useState(false);
-  const [passwordRetype, setPasswordRetype] = useState('12345');
+  const [passwordRetype, setPasswordRetype] = useState('123456');
   const [warnPasswordRetype, setWarnPasswordRetype] = useState(undefined);
   const [isShowPasswordRetype, setShowPasswordRetype] = useState(false);
   const [name, setName] = useState('Ngộ Nghĩnh');
@@ -30,10 +31,10 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
 
   useEffect(() => {
     async function getCategories() {
-      await generalStore.getCategories({showLoading: true})
+      await generalStore.getCategories({ showLoading: false })
     }
     getCategories()
-  })
+  }, [])
 
   const checkValidInput = () => {
     var isValid = true
@@ -65,12 +66,10 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
 
   return (
     <Screen style={ROOT} preset="scroll">
-      <View style={{ flex: 1, justifyContent: 'center', marginHorizontal: metrics.baseMargin }}>
-        <Text preset="header" text="ĐĂNG KÝ" />
-      </View>
       <View style={{ flex: 1, marginHorizontal: metrics.baseMargin }}>
+        <Text preset="header" text="ĐĂNG KÝ" style={{ marginTop: '20%' }} />
         {/* Mật khẩu */}
-        <Text preset="default" text="Mật khẩu" style={{ marginTop: 10 }} />
+        <Text preset="default" text="Mật khẩu (*)" style={{ marginTop: 10 }} />
         <TextField
           style={{ marginTop: 5 }}
           componentLeft={<Icon type='font-awesome-5' name='lock' containerStyle={{ marginStart: 5 }} size={16} />}
@@ -78,7 +77,7 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
           placeholder='Nhập mật khẩu' onChangeText={password => setPassword(password)} defaultValue={password} secureTextEntry={!isShowPassword} />
         <WarnText preset="default" text={warnPassword} />
         {/* Nhập lại mật khẩu */}
-        <Text preset="default" text="Nhập lại mật khẩu" style={{ marginTop: 10 }} />
+        <Text preset="default" text="Nhập lại mật khẩu (*)" style={{ marginTop: 10 }} />
         <TextField
           style={{ marginTop: 5 }}
           componentLeft={<Icon type='font-awesome-5' name='lock' containerStyle={{ marginStart: 5 }} size={16} />}
@@ -86,24 +85,23 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
           placeholder='Nhập mật khẩu' onChangeText={password => setPasswordRetype(password)} defaultValue={passwordRetype} secureTextEntry={!isShowPasswordRetype} />
         <WarnText preset="default" text={warnPasswordRetype} />
         {/* Họ và tên */}
-        <Text preset="default" text="Nhập họ và tên" style={{ marginTop: 10 }} />
+        <Text preset="default" text="Nhập họ và tên (*)" style={{ marginTop: 10 }} />
         <TextField
           style={{ marginTop: 5 }}
           componentLeft={<Icon type='material-community' name='card-account-details' containerStyle={{ marginStart: 5 }} size={16} />}
           placeholder='Nhập họ và tên' onChangeText={name => setName(name)} defaultValue={name} />
         <WarnText preset="default" text={warnPasswordRetype} />
         {/* Sở thích */}
-        <Text preset="default" text="Sở thích" style={{ marginTop: 10 }} />
+        <Text preset="default" text="Sở thích (*)" style={{ marginTop: 10 }} />
         <FlatList
+          scrollEnabled={false}
           keyExtractor={(item) => String(item._id)}
           data={categories}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={{}}>
-              <Text style={{}}>{item.name}</Text>
-            </TouchableOpacity>
+          numColumns={3}
+          columnWrapperStyle={{justifyContent: 'space-between'}}
+          renderItem={({ item, index }) => (
+            <CategoryItem item={item} style={{minWidth: '30%', marginTop: 10}}/>
           )} />
-      </View>
-      <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', marginHorizontal: metrics.baseMargin }}>
         <Button onPress={nextStep} text="XÁC NHẬN" style={{ backgroundColor: 'black', height: 40, marginBottom: 20 }} textStyle={{ fontSize: 15 }} />
       </View>
     </Screen>

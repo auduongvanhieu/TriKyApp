@@ -67,7 +67,6 @@ export class Api {
     console.log('hieunv', 'login_params', body);
     rootStoreRef.appStore.showLoading()
     const response: ApiResponse<any> = await this.apisauce.post(`/login`, body)
-    console.log('hieunv', 'response', response);
     rootStoreRef.appStore.hideLoading()
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
