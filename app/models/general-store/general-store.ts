@@ -16,6 +16,7 @@ export const GeneralStoreModel = types
   .actions((self) => ({
     getCategories: async (params) => {
       const api = new Api()
+      api.setup()
       const result = await api.getCategories(params)
       if (result.kind === "ok") {
         self.saveCategories(result.data)
