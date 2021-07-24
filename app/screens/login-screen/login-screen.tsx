@@ -44,7 +44,6 @@ export const LoginScreen = observer(function LoginScreen() {
   const login = async () => {
     if (checkValidInput()) {
       const api = new Api()
-      api.setup()
       let res = await api.login({ phone, password })
       if (res.kind == 'ok') {
         goToMain()

@@ -30,11 +30,12 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
   const { categories } = generalStore
 
   useEffect(() => {
-    async function getCategories() {
-      await generalStore.getCategories({ showLoading: false })
-    }
-    getCategories()
+    onRefresh()
   }, [])
+
+  async function onRefresh() {
+    await generalStore.getCategories({ showLoading: false })
+  }
 
   const checkValidInput = () => {
     var isValid = true
@@ -65,7 +66,7 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
   }
 
   return (
-    <Screen style={ROOT} preset="scroll">
+    <Screen style={ROOT} onRefresh={onRefresh} preset="scroll">
       <View style={{ flex: 1, marginHorizontal: metrics.baseMargin }}>
         <Text preset="header" text="ĐĂNG KÝ" style={{ marginTop: '20%' }} />
         {/* Mật khẩu */}

@@ -10,6 +10,7 @@ export class Api {
 
   constructor(config: ApiConfig = DEFAULT_API_CONFIG) {
     this.config = config
+    this.setup()
   }
 
   setup() {
