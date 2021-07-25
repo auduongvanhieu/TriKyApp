@@ -68,6 +68,7 @@ export class Api {
     console.log('hieunv', 'login_params', body);
     rootStoreRef.appStore.showLoading()
     const response: ApiResponse<any> = await this.apisauce.post(`/login`, body)
+    console.log('hieunv', 'login_response', response);
     rootStoreRef.appStore.hideLoading()
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
@@ -79,7 +80,8 @@ export class Api {
       console.log('hieunv', 'login_res', res);
       rootStoreRef.appStore.showSuccessAlert({ description: "Đăng nhập thành công" })
       return { kind: "ok", data: res }
-    } catch {
+    } catch(error) {
+      console.log('hieunv', 'login_error', error);
       return { kind: "bad-data" }
     }
   }
@@ -101,7 +103,8 @@ export class Api {
       const res: any = response.data
       console.log('hieunv', 'getCategories_res', res);
       return { kind: "ok", data: res }
-    } catch {
+    } catch(error) {
+      console.log('hieunv', 'getCategories_error', error);
       return { kind: "bad-data" }
     }
   }
