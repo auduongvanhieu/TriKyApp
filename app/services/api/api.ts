@@ -67,7 +67,7 @@ export class Api {
   async login(body: any): Promise<any> {
     console.log('hieunv', 'login_params', body);
     rootStoreRef.appStore.showLoading()
-    const response: ApiResponse<any> = await this.apisauce.post(`/login`, body)
+    const response = await this.apisauce.post(`/login`, body, {headers: {}})
     console.log('hieunv', 'login_response', response);
     rootStoreRef.appStore.hideLoading()
     if (!response.ok) {
