@@ -11,18 +11,15 @@ import { translate } from "../../i18n"
  */
 export function WarnText(props: TextProps) {
   // grab the props
-  const { preset = "default", tx, txOptions, text, children, style: styleOverride, ...rest } = props
+  const { preset = "default", tx, txOptions, text, children, style, ...rest } = props
 
   // figure out which content to use
   const i18nText = tx && translate(tx, txOptions)
   const content = i18nText || text || children
 
-  const style = presets[preset] || presets.default
-  const styles = [style, styleOverride]
-
   return (
     <>
-      {content && <ReactNativeText {...rest} style={{...styles, color: 'red', fontStyle: 'italic', fontSize: 12}}>
+      {content && <ReactNativeText {...rest} style={[{color: 'red', fontStyle: 'italic', fontSize: 12}, style]}>
         {content}
       </ReactNativeText>}
     </>

@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useState } from "react"
-import { FlatList, TouchableOpacity, View, ViewStyle } from "react-native"
+import { FlatList, View, ViewStyle } from "react-native"
 import { Icon } from "react-native-elements"
 import { Button, Screen, Text, TextField } from "../../components"
 import { CategoryItem } from "../../components/common/category-item"
@@ -76,7 +76,7 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
           componentLeft={<Icon type='font-awesome-5' name='lock' containerStyle={{ marginStart: 5 }} size={16} />}
           componentRight={<Icon onPress={() => setShowPassword(!isShowPassword)} type='entypo' name={isShowPassword ? 'eye' : 'eye-with-line'} containerStyle={{ marginEnd: 5 }} size={18} />}
           placeholder='Nhập mật khẩu' onChangeText={password => setPassword(password)} defaultValue={password} secureTextEntry={!isShowPassword} />
-        <WarnText preset="default" text={warnPassword} />
+        <WarnText text={warnPassword} />
         {/* Nhập lại mật khẩu */}
         <Text preset="default" text="Nhập lại mật khẩu (*)" style={{ marginTop: 10 }} />
         <TextField
@@ -84,26 +84,29 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
           componentLeft={<Icon type='font-awesome-5' name='lock' containerStyle={{ marginStart: 5 }} size={16} />}
           componentRight={<Icon onPress={() => setShowPasswordRetype(!isShowPassword)} type='entypo' name={isShowPasswordRetype ? 'eye' : 'eye-with-line'} containerStyle={{ marginEnd: 5 }} size={18} />}
           placeholder='Nhập mật khẩu' onChangeText={password => setPasswordRetype(password)} defaultValue={passwordRetype} secureTextEntry={!isShowPasswordRetype} />
-        <WarnText preset="default" text={warnPasswordRetype} />
+        <WarnText text={warnPasswordRetype} />
         {/* Họ và tên */}
         <Text preset="default" text="Nhập họ và tên (*)" style={{ marginTop: 10 }} />
         <TextField
           style={{ marginTop: 5 }}
           componentLeft={<Icon type='material-community' name='card-account-details' containerStyle={{ marginStart: 5 }} size={16} />}
           placeholder='Nhập họ và tên' onChangeText={name => setName(name)} defaultValue={name} />
-        <WarnText preset="default" text={warnPasswordRetype} />
+        <WarnText text={warnName} />
         {/* Sở thích */}
-        <Text preset="default" text="Sở thích (*)" style={{ marginTop: 10 }} />
-        <FlatList
-          scrollEnabled={false}
-          keyExtractor={(item) => String(item._id)}
-          data={categories}
-          numColumns={3}
-          columnWrapperStyle={{justifyContent: 'space-between'}}
-          renderItem={({ item, index }) => (
-            <CategoryItem item={item} style={{minWidth: '30%', marginTop: 10}}/>
-          )} />
-        <Button onPress={nextStep} text="XÁC NHẬN" style={{ backgroundColor: 'black', height: 40, marginBottom: 20 }} textStyle={{ fontSize: 15 }} />
+        <Text text="Sở thích (*)" style={{ marginTop: 10 }} />
+        <View style={{width: '100%'}}>
+          <FlatList
+            scrollEnabled={false}
+            keyExtractor={(item) => String(item._id)}
+            data={[...categories]}
+            numColumns={3}
+            columnWrapperStyle={{ justifyContent: 'space-between' }}
+            renderItem={({ item, index }) => (
+              <CategoryItem item={item} style={{ minWidth: '30%', marginTop: 10 }} />
+            )} />
+        </View>
+        <WarnText text={warnHobbies} style={{ marginTop: 10 }}/>
+        <Button onPress={nextStep} text="XÁC NHẬN" style={{ backgroundColor: 'black', height: 40, marginVertical: 20 }} textStyle={{ fontSize: 15 }} />
       </View>
     </Screen>
   )
