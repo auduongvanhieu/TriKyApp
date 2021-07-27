@@ -1,12 +1,11 @@
-import { Tron } from "./tron"
+import Tron from "reactotron-react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { RootStore } from "../../models/root-store/root-store"
 import { onSnapshot } from "mobx-state-tree"
 import { ReactotronConfig, DEFAULT_REACTOTRON_CONFIG } from "./reactotron-config"
 import { mst } from "reactotron-mst"
 import { clear } from "../../utils/storage"
-import { RootNavigation } from "../../navigators/navigation-utilities"
-import { Platform } from "react-native"
+import { RootNavigation } from "../../navigators"
 
 // Teach TypeScript about the bad things we want to do.
 declare global {
@@ -119,14 +118,12 @@ export class Reactotron {
       })
 
       // hookup middleware
-      if (Platform.OS !== "web") {
-        if (this.config.useAsyncStorage) {
-          Tron.setAsyncStorageHandler(AsyncStorage)
-        }
-        Tron.useReactNative({
-          asyncStorage: this.config.useAsyncStorage ? undefined : false,
-        })
+      if (this.config.useAsyncStorage) {
+        Tron.setAsyncStorageHandler(AsyncStorage)
       }
+      Tron.useReactNative({
+        asyncStorage: this.config.useAsyncStorage ? undefined : false,
+      })
 
       // ignore some chatty `mobx-state-tree` actions
       const RX = /postProcessSnapshot|@APPLY_SNAPSHOT/

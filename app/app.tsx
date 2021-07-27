@@ -33,7 +33,7 @@ import { enableScreens } from "react-native-screens"
 enableScreens()
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
-let rootStoreRef : RootStore
+
 /**
  * This is the root component of our app.
  */
@@ -52,10 +52,7 @@ function App() {
   useEffect(() => {
     ;(async () => {
       await initFonts() // expo
-      setupRootStore().then(values=>{
-        setRootStore(values)
-        rootStoreRef = values
-      })
+      setupRootStore().then(setRootStore)
     })()
   }, [])
 
@@ -80,5 +77,5 @@ function App() {
     </ToggleStorybook>
   )
 }
-export {rootStoreRef}
+
 export default App
