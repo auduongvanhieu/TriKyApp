@@ -80,4 +80,27 @@ export class Api {
       return { kind: "bad-data" }
     }
   }
+
+  /**
+   * Get categories
+   */
+   async getCategories(params: any): Promise<any> {
+    if (params.showLoading)
+      rootStoreRef.appStore.showLoading()
+    const response: ApiResponse<any> = await this.apisauce.get(`/categories/all`)
+    rootStoreRef.appStore.hideLoading()
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      console.log('hieunv', 'getCategories_problem', problem);
+      if (problem) return problem
+    }
+    try {
+      const res: any = response.data
+      console.log('hieunv', 'getCategories_res', res);
+      return { kind: "ok", data: res }
+    } catch(error) {
+      console.log('hieunv', 'getCategories_error', error);
+      return { kind: "bad-data" }
+    }
+  }
 }
