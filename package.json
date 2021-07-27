@@ -46,6 +46,7 @@
     "react-native-gesture-handler": "1.10.3",
     "react-native-keychain": "6.2.0",
     "react-native-otp-inputs": "^7.0.3",
+    "react-native-pager-view": "^5.4.0",
     "react-native-safe-area-context": "3.1.8",
     "react-native-screens": "2.18.1",
     "react-native-spinkit": "^1.5.1",

@@ -1,4 +1,10 @@
+export * from "./splash-screen/splash-screen"
 export * from "./welcome/welcome-screen"
 export * from "./demo/demo-screen"
 export * from "./demo/demo-list-screen"
-// export other screens here
+export * from "./login-screen/login-screen"
+export * from "./home-screen/home-screen"
+export * from "./history-screen/history-screen"
+export * from "./register-screen/register-step-1-screen"
+export * from "./register-screen/register-step-2-screen"
+export * from "./register-screen/register-step-3-screen"

@@ -1,4 +1,7 @@
 {
+  "app": {
+    "appName": "Tri kỷ"
+  },
   "common": {
     "ok": "OK!",
     "cancel": "Cancel",
