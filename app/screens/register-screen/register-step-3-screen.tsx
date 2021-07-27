@@ -34,7 +34,7 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
   }, [])
 
   async function onRefresh() {
-    await generalStore.getCategories({ showLoading: false })
+    await generalStore.getCategories({ showLoading: true })
   }
 
   const checkValidInput = () => {

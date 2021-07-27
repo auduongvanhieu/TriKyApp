@@ -30,7 +30,7 @@ export interface ScreenProps {
   /**
    * Should we not wrap in SafeAreaView? Defaults to false.
    */
-  unsafe?: boolean
+  safe?: boolean
 
   /**
    * By how much should we offset the keyboard? Defaults to none.
@@ -42,4 +42,6 @@ export interface ScreenProps {
    * Only applies to scroll preset.
    */
   keyboardShouldPersistTaps?: "handled" | "always" | "never"
+
+  onRefresh?: any
 }
