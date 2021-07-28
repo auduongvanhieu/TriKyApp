@@ -6,6 +6,7 @@ import { Button, Screen, Text, TextField } from "../../components"
 import { CategoryItem } from "../../components/common/category-item"
 import { WarnText } from "../../components/text/warn-text"
 import { useStores } from "../../models"
+import { RegisterModel } from "../../models/request-models/RegisterModel"
 import { color } from "../../theme"
 import metrics from "../../theme/metrics"
 
@@ -59,9 +60,20 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
     return isValid
   }
 
+  const onPressCategory = (item) => {
+    if(!hobbies.includes(item.code))
+      hobbies.push(item.code)
+    else
+      hobbies.splice(hobbies.indexOf(item.code),1)
+    console.log('hieunv', 'hobbies', hobbies);
+    setHobbies([...hobbies])
+  }
+
   const nextStep = async () => {
     if (checkValidInput()) {
-
+      RegisterModel.password = password;
+      RegisterModel.name = name;
+      RegisterModel.hobbies = hobbies;
     }
   }
 
@@ -102,7 +114,7 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
             numColumns={3}
             columnWrapperStyle={{ justifyContent: 'space-between' }}
             renderItem={({ item, index }) => (
-              <CategoryItem item={item} style={{ minWidth: '30%', marginTop: 10 }} />
+              <CategoryItem onPress={()=>onPressCategory(item)} item={item} isSelect={hobbies.includes(item.code)} style={{ minWidth: '30%', marginTop: 10 }} />
             )} />
         </View>
         <WarnText text={warnHobbies} style={{ marginTop: 10 }}/>

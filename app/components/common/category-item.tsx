@@ -1,9 +1,10 @@
 import * as React from "react"
-import { Text, TouchableOpacity, ViewStyle } from "react-native"
+import { Text, TouchableOpacity } from "react-native"
+import { color } from "../../theme"
 
-export function CategoryItem({ style, item }) {
+export function CategoryItem({ style, item, onPress, isSelect = false }) {
   return (
-    <TouchableOpacity style={[{ backgroundColor: item?.bgColor, borderRadius: 20, padding: 5, alignItems: 'center' }, style]}>
+    <TouchableOpacity onPress={onPress} style={[{ backgroundColor: item?.bgColor, borderRadius: 20, padding: 5, alignItems: 'center'}, isSelect && {borderColor: color.palette.black, borderWidth:3}, style]}>
       <Text style={{ color: item?.textColor }}>{item?.name}</Text>
     </TouchableOpacity>
   )
