@@ -9,6 +9,8 @@ import { useStores } from "../../models"
 import { RegisterModel } from "../../models/request-models/RegisterModel"
 import { color } from "../../theme"
 import metrics from "../../theme/metrics"
+import TextInputMask from 'react-native-text-input-mask';
+import { TextFieldMask } from "../../components/text-field/text-field-mask"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.main,
@@ -24,6 +26,8 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
   const [isShowPasswordRetype, setShowPasswordRetype] = useState(false);
   const [name, setName] = useState('Ngộ Nghĩnh');
   const [warnName, setWarnName] = useState(undefined);
+  const [birthday, setBirthday] = useState('');
+  const [warnBirthday, setWarnBirthday] = useState(undefined);
   const [hobbies, setHobbies] = useState([]);
   const [warnHobbies, setWarnHobbies] = useState(undefined);
 
@@ -104,6 +108,14 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
           componentLeft={<Icon type='material-community' name='card-account-details' containerStyle={{ marginStart: 5 }} size={16} />}
           placeholder='Nhập họ và tên' onChangeText={name => setName(name)} defaultValue={name} />
         <WarnText text={warnName} />
+        {/* Ngày tháng năm sinh */}
+        <Text preset="default" text="Nhập ngày tháng năm sinh (*)" style={{ marginTop: 10 }} />
+        <TextFieldMask
+          style={{ marginTop: 5 }} mask={'[00]/[00]/[0000]'}
+          keyboardType='numeric'
+          componentLeft={<Icon type='font-awesome' name='birthday-cake' containerStyle={{ marginStart: 5 }} size={16} />}
+          placeholder='DD/MM/YYYY' onChangeText={birthday => setBirthday(birthday)} defaultValue={birthday} />
+        <WarnText text={warnBirthday} />
         {/* Sở thích */}
         <Text text="Sở thích (*)" style={{ marginTop: 10 }} />
         <View style={{width: '100%'}}>
