@@ -99,6 +99,8 @@ export class Api {
       const res: any = response.data
       console.log('hieunv', 'register_res', res);
       rootStoreRef.appStore.showSuccessAlert({ description: "Đăng ký thành công" })
+      rootStoreRef.authStore.saveToken(res?.token)
+      rootStoreRef.profileStore.saveProfile(res?.user)
       return { kind: "ok", data: res }
     } catch(error) {
       console.log('hieunv', 'register_error', error);
@@ -121,6 +123,7 @@ export class Api {
     }
     try {
       const res: any = response.data
+      rootStoreRef.generalStore.saveCategories(res)
       console.log('hieunv', 'getCategories_res', res);
       return { kind: "ok", data: res }
     } catch(error) {

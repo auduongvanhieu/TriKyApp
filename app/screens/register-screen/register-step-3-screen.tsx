@@ -9,8 +9,8 @@ import { useStores } from "../../models"
 import { RegisterModel } from "../../models/request-models/RegisterModel"
 import { color } from "../../theme"
 import metrics from "../../theme/metrics"
-import TextInputMask from 'react-native-text-input-mask';
 import { TextFieldMask } from "../../components/text-field/text-field-mask"
+import { Api } from "../../services/api"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.main,
@@ -18,6 +18,8 @@ const ROOT: ViewStyle = {
 }
 
 export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
+  const api = new Api()
+
   const [password, setPassword] = useState('123456');
   const [warnPassword, setWarnPassword] = useState(undefined);
   const [isShowPassword, setShowPassword] = useState(false);
@@ -39,7 +41,7 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
   }, [])
 
   async function onRefresh() {
-    await generalStore.getCategories({ showLoading: true })
+    await api.getCategories({ showLoading: true })
   }
 
   const checkValidInput = () => {
@@ -65,10 +67,10 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
   }
 
   const onPressCategory = (item) => {
-    if(!hobbies.includes(item.code))
+    if (!hobbies.includes(item.code))
       hobbies.push(item.code)
     else
-      hobbies.splice(hobbies.indexOf(item.code),1)
+      hobbies.splice(hobbies.indexOf(item.code), 1)
     console.log('hieunv', 'hobbies', hobbies);
     setHobbies([...hobbies])
   }
@@ -118,7 +120,7 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
         <WarnText text={warnBirthday} />
         {/* Sở thích */}
         <Text text="Sở thích (*)" style={{ marginTop: 10 }} />
-        <View style={{width: '100%'}}>
+        <View style={{ width: '100%' }}>
           <FlatList
             scrollEnabled={false}
             keyExtractor={(item) => String(item._id)}
@@ -126,10 +128,10 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
             numColumns={3}
             columnWrapperStyle={{ justifyContent: 'space-between' }}
             renderItem={({ item, index }) => (
-              <CategoryItem onPress={()=>onPressCategory(item)} item={item} isSelect={hobbies.includes(item.code)} style={{ minWidth: '30%', marginTop: 10 }} />
+              <CategoryItem onPress={() => onPressCategory(item)} item={item} isSelect={hobbies.includes(item.code)} style={{ minWidth: '30%', marginTop: 10 }} />
             )} />
         </View>
-        <WarnText text={warnHobbies} style={{ marginTop: 10 }}/>
+        <WarnText text={warnHobbies} style={{ marginTop: 10 }} />
         <Button onPress={nextStep} text="XÁC NHẬN" style={{ backgroundColor: 'black', height: 40, marginVertical: 20 }} textStyle={{ fontSize: 15 }} />
       </View>
     </Screen>

@@ -1,5 +1,4 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
-import { Api } from "../../services/api"
 import { withEnvironment } from "../extensions/with-environment"
 
 export const GeneralStoreModel = types
@@ -11,15 +10,6 @@ export const GeneralStoreModel = types
   .actions((self) => ({
     saveCategories: (categoriesSnapshots: any) => {
       self.categories.replace(categoriesSnapshots)
-    },
-  }))
-  .actions((self) => ({
-    getCategories: async (params) => {
-      const api = new Api()
-      const result = await api.getCategories(params)
-      if (result.kind === "ok") {
-        self.saveCategories(result.data)
-      }
     },
   }))
 
