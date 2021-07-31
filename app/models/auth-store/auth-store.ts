@@ -1,12 +1,13 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { withEnvironment } from "../extensions/with-environment"
 
 export const AuthStoreModel = types
   .model("AuthStore")
-  .props({})
-  .views(self => ({
-    token: types.string,
-    loginParams: { phone: types.string, password: types.string }
-  }))
+  .props({
+    token: types.optional(types.string, ""),
+    loginParams: types.optional(types.model({ phone: types.string, password: types.string }),{phone: "", password: ""})
+  })
+  .extend(withEnvironment)
   .actions(self => ({
     saveToken: (token: any) => { self.token = token },
     saveLoginParams: (loginParams: any) => { self.loginParams = loginParams },
