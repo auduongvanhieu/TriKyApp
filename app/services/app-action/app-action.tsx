@@ -1,15 +1,31 @@
-import { observer } from "mobx-react-lite"
-import React, { useEffect } from "react"
-import { useRef } from "react";
+import { CommonActions, StackActions } from "@react-navigation/native";
+import { observer } from "mobx-react-lite";
+import React, { useEffect, useRef } from "react";
 import DropdownAlert from "react-native-dropdownalert";
-import { Loading } from "../../components"
+import { Loading } from "../../components";
 import { useStores } from "../../models";
 
-export const navigationRef = React.createRef();
+export var navigationRef = React.createRef();
+
+export const setNavigationRef = (navRef) => {
+  navigationRef = navRef
+}
+export function requestNavigate(name, params: any = {}) {
+  navigationRef.current?.dispatch(CommonActions.navigate({ name, params, }));
+}
+export function requestReplace(name, params: any = {}) {
+  navigationRef.current?.dispatch(StackActions.replace(name, params));
+}
+export function requestGoBack() {
+  navigationRef.current?.dispatch(CommonActions.goBack());
+}
+export function requestPopToTop() {
+  navigationRef.current?.dispatch(StackActions.popToTop());
+}
 
 export const AppAction = observer(function AppAction() {
 
-  const dropdownRef =  useRef(null)
+  const dropdownRef = useRef(null)
 
   const { appStore } = useStores()
   const { isLoading, dropdownAlert } = appStore
@@ -19,7 +35,7 @@ export const AppAction = observer(function AppAction() {
   }, [])
 
   useEffect(() => {
-    if(dropdownAlert.type){
+    if (dropdownAlert.type) {
       console.log('hieunv', 'dropdownAlert', dropdownAlert)
       dropdownRef.current.alertWithType(dropdownAlert.type, dropdownAlert.title, dropdownAlert.description)
       appStore.resetAlert()
@@ -28,7 +44,7 @@ export const AppAction = observer(function AppAction() {
 
   return (
     <>
-      {isLoading && <Loading/>}
+      {isLoading && <Loading />}
       <DropdownAlert updateStatusBar={false} ref={dropdownRef} />
     </>
   )

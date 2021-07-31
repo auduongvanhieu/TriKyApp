@@ -55,7 +55,7 @@ export const RootNavigator = React.forwardRef<NavigationContainerRef,
       function checkBackPress() {
         if (Platform.OS === 'android') {
           BackHandler.addEventListener('hardwareBackPress', () => {
-            if (["login"].includes(currentRouteName)) {
+            if (["login", "Trang chủ"].includes(currentRouteName)) {
               if (isBack === true) BackHandler.exitApp();
               else ToastAndroid.show("Nhấn nút back 2 lần để thoát ứng dụng", ToastAndroid.SHORT);
               isBack = true;

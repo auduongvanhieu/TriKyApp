@@ -1,8 +1,8 @@
-import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import React, { useEffect } from "react"
 import { Image, ImageStyle, TextStyle, ViewStyle } from "react-native"
 import { Screen, Text } from "../../components"
+import { requestReplace } from "../../services/app-action/app-action"
 import { color } from "../../theme"
 import { images } from "../../theme/images"
 
@@ -12,8 +12,7 @@ const TEXT: TextStyle = { color: color.palette.black, fontSize: 30 }
 const TEXT_SLOGAN: TextStyle = { color: color.palette.black, fontSize: 20, fontStyle: 'italic' }
 
 export const SplashScreen = observer(function SplashScreen() {
-  const navigation = useNavigation()
-  const nextScreen = () => { navigation.navigate("login") }
+  const nextScreen = () => { requestReplace("login") }
 
   useEffect(() => {
     let timer1 = setTimeout(() => { nextScreen() }, 2000)

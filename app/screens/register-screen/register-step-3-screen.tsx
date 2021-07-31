@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useState } from "react"
 import { FlatList, Image, ScrollView, TouchableOpacity, View, ViewStyle } from "react-native"
@@ -10,6 +9,7 @@ import { WarnText } from "../../components/text/warn-text"
 import { useStores } from "../../models"
 import { RegisterModel } from "../../models/request-models/RegisterModel"
 import { Api } from "../../services/api"
+import { requestPopToTop, requestReplace } from "../../services/app-action/app-action"
 import { color } from "../../theme"
 import metrics from "../../theme/metrics"
 import { convertStringToDate, getGenderImage, getGenderName, isValidDate } from "../../utils/functions"
@@ -39,8 +39,7 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
   const { generalStore } = useStores()
   const { categories } = generalStore
 
-  const navigation = useNavigation()
-  const goToMain = () => { navigation.navigate("main") }
+  const goToMain = () => { requestPopToTop(); requestReplace("main"); }
 
   useEffect(() => {
     onRefresh()

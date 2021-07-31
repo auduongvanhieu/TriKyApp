@@ -47,7 +47,8 @@ export function useBackButtonHandler(
   const canExitRef = useRef(canExit)
 
   useEffect(() => {
-    canExitRef.current = canExit
+    if(canExitRef)
+      canExitRef.current = canExit
   }, [canExit])
 
   useEffect(() => {
@@ -63,7 +64,7 @@ export function useBackButtonHandler(
       const routeName = getActiveRouteName(navigation.getRootState())
 
       // are we allowed to exit?
-      if (canExitRef.current(routeName)) {
+      if (canExitRef && canExitRef?.current && canExitRef?.current(routeName)) {
         // let the system know we've not handled this event
         return false
       }

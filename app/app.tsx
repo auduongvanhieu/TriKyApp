@@ -30,6 +30,7 @@ import { ToggleStorybook } from "../storybook/toggle-storybook"
 // stack navigation, use `createNativeStackNavigator` in place of `createStackNavigator`:
 // https://github.com/kmagiera/react-native-screens#using-native-stack-navigator
 import { enableScreens } from "react-native-screens"
+import { setNavigationRef } from "./services/app-action/app-action"
 enableScreens()
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
@@ -41,6 +42,7 @@ function App() {
   const navigationRef = useRef<NavigationContainerRef>()
   const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
 
+  setNavigationRef(navigationRef)
   setRootNavigation(navigationRef)
   useBackButtonHandler(navigationRef, canExit)
   const { initialNavigationState, onNavigationStateChange } = useNavigationPersistence(
