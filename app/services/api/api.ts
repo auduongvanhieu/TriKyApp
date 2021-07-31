@@ -59,10 +59,10 @@ export class Api {
   /**
    * Login
    */
-   async login(body: any): Promise<any> {
+  async login(body: any): Promise<any> {
     console.log('hieunv', 'login_params', body);
     rootStoreRef.appStore.showLoading()
-    const response = await this.apisauce.post(`/login`, body, {headers: {}})
+    const response = await this.apisauce.post(`/login`, body, { headers: {} })
     console.log('hieunv', 'login_response', response);
     rootStoreRef.appStore.hideLoading()
     if (!response.ok) {
@@ -74,8 +74,10 @@ export class Api {
       const res: any = response.data
       console.log('hieunv', 'login_res', res);
       rootStoreRef.appStore.showSuccessAlert({ description: "Đăng nhập thành công" })
+      rootStoreRef.authStore.saveToken(res?.token)
+      rootStoreRef.profileStore.saveProfile(res?.user)
       return { kind: "ok", data: res }
-    } catch(error) {
+    } catch (error) {
       console.log('hieunv', 'login_error', error);
       return { kind: "bad-data" }
     }
@@ -84,10 +86,10 @@ export class Api {
   /**
    * Register
    */
-   async register(body: any): Promise<any> {
+  async register(body: any): Promise<any> {
     console.log('hieunv', 'register_params', body);
     rootStoreRef.appStore.showLoading()
-    const response = await this.apisauce.post(`/register`, body, {headers: {}})
+    const response = await this.apisauce.post(`/register`, body, { headers: {} })
     console.log('hieunv', 'register_response', response);
     rootStoreRef.appStore.hideLoading()
     if (!response.ok) {
@@ -102,7 +104,7 @@ export class Api {
       rootStoreRef.authStore.saveToken(res?.token)
       rootStoreRef.profileStore.saveProfile(res?.user)
       return { kind: "ok", data: res }
-    } catch(error) {
+    } catch (error) {
       console.log('hieunv', 'register_error', error);
       return { kind: "bad-data" }
     }
@@ -111,7 +113,7 @@ export class Api {
   /**
    * Get categories
    */
-   async getCategories(params: any): Promise<any> {
+  async getCategories(params: any): Promise<any> {
     if (params.showLoading)
       rootStoreRef.appStore.showLoading()
     const response: ApiResponse<any> = await this.apisauce.get(`/categories/all`)
@@ -126,7 +128,7 @@ export class Api {
       rootStoreRef.generalStore.saveCategories(res)
       console.log('hieunv', 'getCategories_res', res);
       return { kind: "ok", data: res }
-    } catch(error) {
+    } catch (error) {
       console.log('hieunv', 'getCategories_error', error);
       return { kind: "bad-data" }
     }

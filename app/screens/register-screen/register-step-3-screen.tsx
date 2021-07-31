@@ -1,16 +1,18 @@
+import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useState } from "react"
-import { FlatList, View, ViewStyle } from "react-native"
+import { FlatList, Image, ScrollView, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Icon } from "react-native-elements"
 import { Button, Screen, Text, TextField } from "../../components"
 import { CategoryItem } from "../../components/common/category-item"
+import { TextFieldMask } from "../../components/text-field/text-field-mask"
 import { WarnText } from "../../components/text/warn-text"
 import { useStores } from "../../models"
 import { RegisterModel } from "../../models/request-models/RegisterModel"
+import { Api } from "../../services/api"
 import { color } from "../../theme"
 import metrics from "../../theme/metrics"
-import { TextFieldMask } from "../../components/text-field/text-field-mask"
-import { Api } from "../../services/api"
+import { convertStringToDate, getGenderImage, getGenderName, isValidDate } from "../../utils/functions"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.main,
@@ -28,13 +30,17 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
   const [isShowPasswordRetype, setShowPasswordRetype] = useState(false);
   const [name, setName] = useState('Ngộ Nghĩnh');
   const [warnName, setWarnName] = useState(undefined);
-  const [birthday, setBirthday] = useState('');
+  const [birthday, setBirthday] = useState('01/01/2000');
   const [warnBirthday, setWarnBirthday] = useState(undefined);
+  const [gender, setGender] = useState(0);
   const [hobbies, setHobbies] = useState([]);
   const [warnHobbies, setWarnHobbies] = useState(undefined);
 
   const { generalStore } = useStores()
   const { categories } = generalStore
+
+  const navigation = useNavigation()
+  const goToMain = () => { navigation.navigate("main") }
 
   useEffect(() => {
     onRefresh()
@@ -47,6 +53,10 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
   const checkValidInput = () => {
     var isValid = true
     setWarnPassword(undefined)
+    setWarnPasswordRetype(undefined)
+    setWarnName(undefined)
+    setWarnBirthday(undefined)
+    setWarnHobbies(undefined)
     if (password.length < 6) {
       setWarnPassword('Vui lòng nhập password có ít nhất 6 ký tự')
       isValid = false
@@ -59,7 +69,7 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
       setWarnName('Vui lòng nhập họ tên')
       isValid = false
     }
-    if (birthday.length < 10) {
+    if (!isValidDate(birthday)) {
       setWarnBirthday('Vui lòng ngày sinh hợp lệ')
       isValid = false
     }
@@ -83,8 +93,23 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
     if (checkValidInput()) {
       RegisterModel.password = password;
       RegisterModel.name = name;
+      RegisterModel.birthday = convertStringToDate(birthday);
+      RegisterModel.gender = gender;
       RegisterModel.hobbies = hobbies;
+      let res = await api.register(RegisterModel)
+      if (res.kind == 'ok') {
+        goToMain()
+      }
     }
+  }
+
+  const renderGender = ({ isChoose = false, gender = 0, onPress }) => {
+    return (
+      <TouchableOpacity onPress={onPress} style={[{ alignItems: 'center', padding: 10, borderRadius: 10, borderWidth: 1, borderColor: 'black', borderStyle: 'dashed' }, isChoose && { borderStyle: 'solid' }]}>
+        <Image source={getGenderImage(gender)} style={[{ width: 50, height: 50, opacity: 0.5 }, isChoose && { opacity: 1 }]} />
+        <Text preset="default" text={getGenderName(gender)} style={[{ marginTop: 10, opacity: 0.5 }, isChoose && { opacity: 1 }]} />
+      </TouchableOpacity>
+    )
   }
 
   return (
@@ -122,6 +147,19 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
           componentLeft={<Icon type='font-awesome' name='birthday-cake' containerStyle={{ marginStart: 5 }} size={16} />}
           placeholder='DD/MM/YYYY' onChangeText={birthday => setBirthday(birthday)} defaultValue={birthday} />
         <WarnText text={warnBirthday} />
+        {/* Giới tính */}
+        <Text preset="default" text="Chọn giới tính (*)" style={{ marginTop: 10 }} />
+        <View style={{ width: '100%' }}>
+          <ScrollView style={{ flexDirection: 'row', marginTop: 10 }} horizontal={true} showsHorizontalScrollIndicator={false}>
+            {renderGender({ isChoose: gender == 0, gender: 0, onPress: () => setGender(0) })}
+            <View style={{ width: 20 }} />
+            {renderGender({ isChoose: gender == 1, gender: 1, onPress: () => setGender(1) })}
+            <View style={{ width: 20 }} />
+            {renderGender({ isChoose: gender == 2, gender: 2, onPress: () => setGender(2) })}
+            <View style={{ width: 20 }} />
+            {renderGender({ isChoose: gender == 3, gender: 3, onPress: () => setGender(3) })}
+          </ScrollView>
+        </View>
         {/* Sở thích */}
         <Text text="Sở thích (*)" style={{ marginTop: 10 }} />
         <View style={{ width: '100%' }}>
