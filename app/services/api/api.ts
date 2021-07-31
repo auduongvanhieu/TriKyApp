@@ -82,6 +82,31 @@ export class Api {
   }
 
   /**
+   * Register
+   */
+   async register(body: any): Promise<any> {
+    console.log('hieunv', 'register_params', body);
+    rootStoreRef.appStore.showLoading()
+    const response = await this.apisauce.post(`/register`, body, {headers: {}})
+    console.log('hieunv', 'register_response', response);
+    rootStoreRef.appStore.hideLoading()
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      console.log('hieunv', 'register_problem', problem);
+      if (problem) return problem
+    }
+    try {
+      const res: any = response.data
+      console.log('hieunv', 'register_res', res);
+      rootStoreRef.appStore.showSuccessAlert({ description: "Đăng ký thành công" })
+      return { kind: "ok", data: res }
+    } catch(error) {
+      console.log('hieunv', 'register_error', error);
+      return { kind: "bad-data" }
+    }
+  }
+
+  /**
    * Get categories
    */
    async getCategories(params: any): Promise<any> {
