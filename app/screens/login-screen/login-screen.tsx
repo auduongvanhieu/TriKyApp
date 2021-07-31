@@ -1,13 +1,13 @@
-import React, { useState } from "react"
+import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
-import { View, ViewStyle, TouchableOpacity } from "react-native"
+import React, { useState } from "react"
+import { TouchableOpacity, View, ViewStyle } from "react-native"
+import { Icon } from "react-native-elements/dist/icons/Icon"
 import { Button, Screen, Text, TextField } from "../../components"
+import { WarnText } from "../../components/text/warn-text"
+import { api } from "../../services/api"
 import { color } from "../../theme"
 import metrics from "../../theme/metrics"
-import { Icon } from "react-native-elements/dist/icons/Icon"
-import { useNavigation } from "@react-navigation/native"
-import { Api } from "../../services/api"
-import { WarnText } from "../../components/text/warn-text"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.main,
@@ -43,7 +43,6 @@ export const LoginScreen = observer(function LoginScreen() {
 
   const login = async () => {
     if (checkValidInput()) {
-      const api = new Api()
       let res = await api.login({ phone, password })
       if (res.kind == 'ok') {
         goToMain()

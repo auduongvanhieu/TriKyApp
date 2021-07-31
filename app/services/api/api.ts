@@ -4,8 +4,8 @@ import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
 import * as Types from "./api.types"
 import { rootStoreRef } from "../../app"
 
-export class Api {
-
+class Api {
+  
   apisauce: ApisauceInstance
   config: ApiConfig
 
@@ -15,11 +15,14 @@ export class Api {
   }
 
   setup() {
+    const authToken = "Bearer " + rootStoreRef?.authStore?.token
+    console.log('hieunv', 'auth_token', authToken);
     this.apisauce = create({
       baseURL: this.config.url,
       timeout: this.config.timeout,
       headers: {
         Accept: "application/json",
+        Authorization: authToken
       },
     })
   }
@@ -133,4 +136,32 @@ export class Api {
       return { kind: "bad-data" }
     }
   }
+
+  /**
+   * Get Profile
+   */
+  async getProfile(params: any): Promise<any> {
+    const response: ApiResponse<any> = await this.apisauce.get(`/profile`)
+    rootStoreRef.appStore.hideLoading()
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      console.log('hieunv', 'getProfile_problem', problem);
+      if (problem) return problem
+    }
+    try {
+      const res: any = response.data
+      rootStoreRef.profileStore.saveProfile(res)
+      console.log('hieunv', 'getProfile_res', res);
+      return { kind: "ok", data: res }
+    } catch (error) {
+      console.log('hieunv', 'getProfile_error', error);
+      return { kind: "bad-data" }
+    }
+  }
 }
+
+var api = new Api()
+const resetApi = () => {
+  api = new Api()
+}
+export { api, resetApi, Api }
