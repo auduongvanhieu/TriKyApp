@@ -10,11 +10,6 @@
   "errors": {
     "invalidEmail": "Invalid email address."
   },
-  "welcomeScreen": {
-    "poweredBy": "POWERED BY IGNITE",
-    "readyForLaunch": "Ready for launch.",
-    "continue": "CONTINUE"
-  },
   "demoScreen": {
     "howTo": "HOW TO",
     "title": "What’s In This Stack?",

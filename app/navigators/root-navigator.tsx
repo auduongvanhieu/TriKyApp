@@ -3,9 +3,8 @@ import { NavigationContainer, NavigationContainerRef } from "@react-navigation/n
 import { createStackNavigator } from "@react-navigation/stack"
 import React, { useEffect } from "react"
 import { BackHandler, Platform, ToastAndroid } from 'react-native'
-import { HistoryScreen, HomeScreen, LoginScreen, RegisterStep1Screen, RegisterStep2Screen, RegisterStep3Screen, SplashScreen } from "../screens"
+import { HistoryScreen, HomeScreen, LoginScreen, RegisterStep1Screen, RegisterStep2Screen, RegisterStep3Screen, SplashScreen, DemoScreen, DemoListScreen } from "../screens"
 import { AppAction } from '../services/app-action/app-action'
-import { MainNavigator } from "./main-navigator"
 
 export type RootParamList = {
   splash: undefined,
@@ -15,6 +14,8 @@ export type RootParamList = {
   registerStep3: undefined,
   main: undefined,
   mainStack: undefined,
+  demo: undefined
+  demoList: undefined
 }
 
 const Stack = createStackNavigator<RootParamList>()
@@ -38,7 +39,8 @@ const RootStack = () => {
       <Stack.Screen name="registerStep2" component={RegisterStep2Screen} />
       <Stack.Screen name="registerStep3" component={RegisterStep3Screen} />
       <Stack.Screen name="main" component={MainTabs} />
-      {/* <Stack.Screen name="mainStack" component={MainNavigator} options={{ headerShown: false, }} /> */}
+      <Stack.Screen name="demo" component={DemoScreen} />
+      <Stack.Screen name="demoList" component={DemoListScreen} />
     </Stack.Navigator>
   )
 }
@@ -49,11 +51,11 @@ export const RootNavigator = React.forwardRef<NavigationContainerRef,
     var currentRouteName = '';
     var isBack = false;
 
-    useEffect(()=>{
-      function checkBackPress(){
+    useEffect(() => {
+      function checkBackPress() {
         if (Platform.OS === 'android') {
-          BackHandler.addEventListener('hardwareBackPress', () => {            
-            if(["login"].includes(currentRouteName)){
+          BackHandler.addEventListener('hardwareBackPress', () => {
+            if (["login"].includes(currentRouteName)) {
               if (isBack === true) BackHandler.exitApp();
               else ToastAndroid.show("Nhấn nút back 2 lần để thoát ứng dụng", ToastAndroid.SHORT);
               isBack = true;
@@ -66,7 +68,7 @@ export const RootNavigator = React.forwardRef<NavigationContainerRef,
         }
       }
       checkBackPress()
-    },[])
+    }, [])
 
     return (
       <NavigationContainer  {...props} ref={ref}

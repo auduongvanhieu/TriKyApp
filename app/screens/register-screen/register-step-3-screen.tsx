@@ -59,6 +59,10 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
       setWarnName('Vui lòng nhập họ tên')
       isValid = false
     }
+    if (birthday.length < 10) {
+      setWarnBirthday('Vui lòng ngày sinh hợp lệ')
+      isValid = false
+    }
     if (hobbies.length == 0) {
       setWarnHobbies('Vui lòng chọn ít nhất một sở thích')
       isValid = false
