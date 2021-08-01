@@ -2,10 +2,11 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import React, { useEffect } from "react"
-import { BackHandler, Platform, ToastAndroid } from 'react-native'
-import { HistoryScreen, HomeScreen, LoginScreen, RegisterStep1Screen, RegisterStep2Screen, RegisterStep3Screen, SplashScreen, DemoScreen, DemoListScreen } from "../screens"
+import { BackHandler, Platform, ToastAndroid, Image } from 'react-native'
+import { HistoryScreen, HomeScreen, LoginScreen, RegisterStep1Screen, RegisterStep2Screen, RegisterStep3Screen, SplashScreen, DemoScreen, DemoListScreen, ChatScreen, SettingScreen } from "../screens"
 import { AppAction } from '../services/app-action/app-action'
-
+import { color } from '../theme/color'
+import { images } from '../theme/images'
 export type RootParamList = {
   splash: undefined,
   login: undefined,
@@ -21,11 +22,31 @@ export type RootParamList = {
 const Stack = createStackNavigator<RootParamList>()
 const Tab = createMaterialTopTabNavigator();
 
+const screenOptions = ({ route }) => ({
+  tabBarIcon: ({ focused, color, size }) => {
+    let iconName = images.ic_menu_home_1;
+    if (route.name === 'home') {
+      iconName = focused ? images.ic_menu_home_2 : images.ic_menu_home_1;
+    } else if (route.name === 'history') {
+      iconName = focused ? images.ic_menu_history_2 : images.ic_menu_history_1;
+    } else if (route.name === 'chat') {
+      iconName = focused ? images.ic_menu_chat_2 : images.ic_menu_chat_1;
+    } else if (route.name === 'setting') {
+      iconName = focused ? images.ic_menu_setting_2 : images.ic_menu_setting_1;
+    }
+    return <Image source={iconName} style={{ width: 20, height: 20, alignSelf: 'center' }} />;
+  }
+})
+
 function MainTabs() {
   return (
-    <Tab.Navigator tabBarPosition='bottom'>
-      <Tab.Screen name="Trang chủ" component={HomeScreen} />
-      <Tab.Screen name="Lịch sử" component={HistoryScreen} />
+    <Tab.Navigator
+      tabBarPosition='bottom' screenOptions={screenOptions}
+      tabBarOptions={{ activeTintColor: color.black, indicatorStyle: {backgroundColor: color.primary}, tabStyle: { paddingVertical: 2 }, style: { borderTopWidth: 0, marginTop: 1 }, labelStyle: { fontSize: 12, textTransform: null, marginTop: 0 }, showIcon: true }}>
+      <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: "Trang chủ" }} />
+      <Tab.Screen name="history" component={HistoryScreen} options={{ tabBarLabel: "Lịch sử" }} />
+      <Tab.Screen name="chat" component={ChatScreen} options={{ tabBarLabel: "Chat" }} />
+      <Tab.Screen name="setting" component={SettingScreen} options={{ tabBarLabel: "Cài đặt" }} />
     </Tab.Navigator>
   );
 }
@@ -55,7 +76,7 @@ export const RootNavigator = React.forwardRef<NavigationContainerRef,
       function checkBackPress() {
         if (Platform.OS === 'android') {
           BackHandler.addEventListener('hardwareBackPress', () => {
-            if (["login", "Trang chủ"].includes(currentRouteName)) {
+            if (["login", "home"].includes(currentRouteName)) {
               if (isBack === true) BackHandler.exitApp();
               else ToastAndroid.show("Nhấn nút back 2 lần để thoát ứng dụng", ToastAndroid.SHORT);
               isBack = true;

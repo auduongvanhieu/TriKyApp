@@ -13,7 +13,7 @@ const BORDER_RADIUS = (THUMB_SIZE * 3) / 4
 
 // colors
 const ON_COLOR = color.primary
-const OFF_COLOR = color.palette.offWhite
+const OFF_COLOR = color.offWhite
 const BORDER_ON_COLOR = ON_COLOR
 const BORDER_OFF_COLOR = "rgba(0, 0, 0, 0.1)"
 

@@ -20,7 +20,7 @@ const OTP_INPUT: TextStyle = {
   height: 40,
   width: 30,
   color: 'black',
-  borderColor: color.palette.black,
+  borderColor: color.black,
   borderWidth: 1,
   padding: 0
 }

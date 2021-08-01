@@ -5,7 +5,7 @@ import { color, typography } from "../../theme"
 
 // the base styling for the container
 const CONTAINER: ViewStyle = {
-  borderColor: color.palette.black,
+  borderColor: color.black,
   borderWidth: 1,
   borderRadius: 4,
   flexDirection: 'row',

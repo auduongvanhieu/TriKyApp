@@ -6,7 +6,7 @@ import { api, resetApi } from "../../services/api"
 import { color } from "../../theme"
 
 const ROOT: ViewStyle = {
-  backgroundColor: color.palette.white,
+  backgroundColor: color.white,
   flex: 1,
 }
 

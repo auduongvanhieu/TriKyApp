@@ -11,7 +11,7 @@ const ROOT: ViewStyle = {
   flex: 1,
 }
 
-export const HistoryScreen = observer(function HistoryScreen() {
+export const ChatScreen = observer(function ChatScreen() {
   // Pull in one of our MST stores
   // const { someStore, anotherStore } = useStores()
   // OR
@@ -21,7 +21,7 @@ export const HistoryScreen = observer(function HistoryScreen() {
   // const navigation = useNavigation()
   return (
     <Screen style={ROOT} preset="scroll">
-      <Text preset="header" text="historyScreen" />
+      <Text preset="header" text="chatScreen" style={{}}/>
     </Screen>
   )
 })

@@ -6,7 +6,7 @@ import TextInputMask from 'react-native-text-input-mask';
 
 // the base styling for the container
 const CONTAINER: ViewStyle = {
-  borderColor: color.palette.black,
+  borderColor: color.black,
   borderWidth: 1,
   borderRadius: 4,
   flexDirection: 'row',

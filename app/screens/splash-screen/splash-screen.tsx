@@ -6,10 +6,10 @@ import { requestReplace } from "../../services/app-action/app-action"
 import { color } from "../../theme"
 import { images } from "../../theme/images"
 
-const ROOT: ViewStyle = { backgroundColor: color.palette.white, flex: 1, alignItems: 'center', justifyContent: 'center' }
+const ROOT: ViewStyle = { backgroundColor: color.white, flex: 1, alignItems: 'center', justifyContent: 'center' }
 const LOGO: ImageStyle = { width: 200, height: 200, }
-const TEXT: TextStyle = { color: color.palette.black, fontSize: 30 }
-const TEXT_SLOGAN: TextStyle = { color: color.palette.black, fontSize: 20, fontStyle: 'italic' }
+const TEXT: TextStyle = { color: color.black, fontSize: 30 }
+const TEXT_SLOGAN: TextStyle = { color: color.black, fontSize: 20, fontStyle: 'italic' }
 
 export const SplashScreen = observer(function SplashScreen() {
   const nextScreen = () => { requestReplace("login") }

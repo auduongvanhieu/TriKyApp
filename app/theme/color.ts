@@ -1,17 +1,21 @@
-import { palette } from "./palette"
-
 export const color = {
   primary: "#00D6D6",
   main: "#00FFFF",
-  primaryDarker: palette.orangeDarker,
-  palette,
+  primaryDarker: "#ddd000",
   transparent: "rgba(0, 0, 0, 0)",
-  background: palette.white,
-  line: palette.offWhite,
-  text: palette.black,
+  background: "#ffffff",
+  line: "#e6e6e6",
+  text: "#1d1d1d",
   textHolder: "rgba(0, 0, 0, 0.5)",
-  dim: palette.lightGrey,
-  error: palette.angry,
-  storybookDarkBg: palette.black,
-  storybookTextColor: palette.black,
+  error: "#dd3333",
+  storybookDarkBg: "#1d1d1d",
+  storybookTextColor: "#1d1d1d",
+  // palette:
+  black: "#1d1d1d",
+  white: "#ffffff",
+  offWhite: "#e6e6e6",
+  orange: "#FBA928",
+  lightGrey: "#939AA4",
+  lighterGrey: "#CDD4DA",
+  angry: "#dd3333",
 }
