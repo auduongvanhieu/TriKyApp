@@ -1,6 +1,8 @@
 export const images = {
-  // Icons
+  // Images
   img_logo_transparent: require("../../assets/img_logo_transparent.png"),
+  img_avatar_default: require("../../assets/img_avatar_default.png"),
+  // Icons
   ic_gender_boy: require("../../assets/icons/ic_gender_boy.png"),
   ic_gender_girl: require("../../assets/icons/ic_gender_girl.png"),
   ic_gender_gay: require("../../assets/icons/ic_gender_gay.png"),
