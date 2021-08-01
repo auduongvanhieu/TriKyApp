@@ -3,6 +3,7 @@ import { getGeneralApiProblem } from "./api-problem"
 import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
 import * as Types from "./api.types"
 import { rootStoreRef } from "../../app"
+import { requestReplace } from "../app-action/app-action"
 
 class Api {
   
@@ -146,6 +147,9 @@ class Api {
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
       console.log('hieunv', 'getProfile_problem', problem);
+      if(problem?.kind=="unauthorized"){
+        requestReplace("login")
+      }
       if (problem) return problem
     }
     try {

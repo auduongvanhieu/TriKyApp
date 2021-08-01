@@ -10,6 +10,7 @@ export const AuthStoreModel = types
   .extend(withEnvironment)
   .actions(self => ({
     saveToken: (token: any) => { self.token = token },
+    logout: () => { self.token = "" },
     saveLoginParams: (loginParams: any) => { self.loginParams = loginParams },
   }))
 

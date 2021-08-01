@@ -10,11 +10,11 @@ const CONTAINER: ViewStyle = {
 }
 
 export interface PopupYesNoProps {
-  children?: any, isVisible: boolean, onClosePress: any, title: string, content: string
+  children?: any, isVisible: boolean, onClosePress: any, onYesPress: any, title?: string, content: string
 }
 
 export function PopupYesNo(props: PopupYesNoProps) {
-  const {isVisible = false, onClosePress, title = 'Thông báo', content='' } = props
+  const {isVisible = false, onClosePress, onYesPress, title = 'Thông báo', content='' } = props
 
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClosePress} animationInTiming={1} animationOutTiming={1}>
@@ -32,7 +32,7 @@ export function PopupYesNo(props: PopupYesNoProps) {
             <TouchableOpacity onPress={onClosePress} style={{backgroundColor: "#939AA4", borderRadius: 4, padding: 10, minWidth: '25%', alignItems: 'center'}}>
               <Text style={{color: 'white', fontSize: 14}}>Từ chối</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{backgroundColor: "#ddd000", borderRadius: 4, padding: 10, marginStart: 10, minWidth: '25%', alignItems: 'center'}}>
+            <TouchableOpacity onPress={()=>{onClosePress(); setTimeout(()=>{onYesPress();},100)}} style={{backgroundColor: "#ddd000", borderRadius: 4, padding: 10, marginStart: 10, minWidth: '25%', alignItems: 'center'}}>
               <Text style={{color: 'white', fontSize: 14}}>Đồng ý</Text>
             </TouchableOpacity>
           </View>

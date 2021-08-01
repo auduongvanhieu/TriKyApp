@@ -10,7 +10,7 @@ const CONTAINER: ViewStyle = {
 }
 
 export interface PopupProps {
-  children?: any, isVisible: boolean, onClosePress: any, title: string
+  children?: any, isVisible: boolean, onClosePress: any, title?: string
 }
 
 export function Popup(props: PopupProps) {

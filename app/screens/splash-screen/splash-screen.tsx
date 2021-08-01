@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite"
 import React, { useEffect } from "react"
 import { Image, ImageStyle, TextStyle, ViewStyle } from "react-native"
+import { rootStoreRef } from "../../app"
 import { Screen, Text } from "../../components"
 import { requestReplace } from "../../services/app-action/app-action"
 import { color } from "../../theme"
@@ -12,10 +13,16 @@ const TEXT: TextStyle = { color: color.black, fontSize: 30 }
 const TEXT_SLOGAN: TextStyle = { color: color.black, fontSize: 20, fontStyle: 'italic' }
 
 export const SplashScreen = observer(function SplashScreen() {
-  const nextScreen = () => { requestReplace("login") }
 
   useEffect(() => {
-    let timer1 = setTimeout(() => { nextScreen() }, 2000)
+    let timer1 = setTimeout(() => {
+      const authToken = rootStoreRef.authStore.token
+      if(authToken && authToken!=""){
+        requestReplace("main")
+      } else {
+        requestReplace("login")
+      }
+    }, 2000)
     return () => { clearTimeout(timer1); };
   })
 
