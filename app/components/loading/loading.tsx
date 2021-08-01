@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ActivityIndicator, View, ViewStyle } from "react-native"
+import { View, ViewStyle } from "react-native"
 import Spinner from "react-native-spinkit"
 
 const CONTAINER: ViewStyle = {
