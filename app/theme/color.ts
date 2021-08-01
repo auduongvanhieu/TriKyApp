@@ -1,7 +1,8 @@
 export const color = {
   primary: "#00D6D6",
   main: "#00FFFF",
-  primaryDarker: "#ddd000",
+  active: "#ddd000",
+  inactive: "#e0e0e0",
   transparent: "rgba(0, 0, 0, 0)",
   background: "#ffffff",
   line: "#e6e6e6",

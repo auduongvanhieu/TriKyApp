@@ -42,7 +42,7 @@ function MainTabs() {
   return (
     <Tab.Navigator
       tabBarPosition='bottom' screenOptions={screenOptions}
-      tabBarOptions={{ activeTintColor: color.black, indicatorStyle: {backgroundColor: color.primary}, tabStyle: { paddingVertical: 2 }, style: { borderTopWidth: 0, marginTop: 1 }, labelStyle: { fontSize: 12, textTransform: null, marginTop: 0 }, showIcon: true }}>
+      tabBarOptions={{ activeTintColor: color.active, inactiveTintColor: color.inactive, indicatorStyle: {backgroundColor: color.active}, tabStyle: { paddingVertical: 2 }, style: { borderTopWidth: 0, marginTop: 1 }, labelStyle: { fontSize: 12, textTransform: null, marginTop: 0 }, showIcon: true }}>
       <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: "Trang chủ" }} />
       <Tab.Screen name="history" component={HistoryScreen} options={{ tabBarLabel: "Lịch sử" }} />
       <Tab.Screen name="chat" component={ChatScreen} options={{ tabBarLabel: "Chat" }} />
