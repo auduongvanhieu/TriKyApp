@@ -1,10 +1,11 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { withEnvironment } from "../extensions/with-environment"
-
+const t = types
 export const ProfileStoreModel = types
   .model("ProfileStore")
   .props({
-    profile: types.optional(types.model(), {})
+    profile: t.optional(t.model({ role: t.string, gender: t.number, verified: t.boolean, phone: t.string, name: t.string, avatar: t.string, birthday: t.string, verification: t.string }),
+      { "role": "", "gender": 0, "verified": false, "phone": "", "name": "", "avatar": "", "birthday": "", "verification": "" })
   })
   .extend(withEnvironment)
   .actions(self => ({

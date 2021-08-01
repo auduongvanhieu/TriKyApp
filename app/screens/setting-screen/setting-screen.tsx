@@ -1,12 +1,13 @@
 import { observer } from "mobx-react-lite"
 import React, { useState } from "react"
-import { TouchableOpacity, ViewStyle } from "react-native"
+import { TouchableOpacity, ViewStyle, Image, View } from "react-native"
 import { Icon } from "react-native-elements"
 import { rootStoreRef } from "../../app"
 import { Screen, Text } from "../../components"
 import { PopupYesNo } from "../../components/popup/popup-yes-no"
 import { requestReplace } from "../../services/app-action/app-action"
 import { color } from "../../theme"
+import { images } from "../../theme/images"
 import metrics from "../../theme/metrics"
 
 const ROOT: ViewStyle = {
@@ -19,9 +20,23 @@ export const SettingScreen = observer(function SettingScreen() {
 
   const [isVisiblePopupLogout, setIsVisiblePopupLogout] = useState(false);
 
+  const profile = rootStoreRef.profileStore.profile
+
   const logout = () => {
     rootStoreRef.authStore.logout()
     requestReplace("login")
+  }
+
+  const renderTopProfile = () => {
+    console.log('hieunv', 'profile', profile);
+    return (
+      <TouchableOpacity style={{flexDirection: 'row', marginTop: 40}}>
+        <Image source={images.img_avatar_default} defaultSource={images.img_avatar_default} style={{width: 60, height: 60, borderRadius: 30}}/>
+        <View style={{flex: 1, marginStart: 10}}>
+          <Text preset='bold' text={profile?.name} style={{ marginStart: 10 }} />
+        </View>
+      </TouchableOpacity>
+    )
   }
 
   const renderRow = ({ onPress= ()=>{}, iconType = 'font-awesome', iconName = 'bell-o', title = "Thông báo" }) => {
@@ -35,7 +50,8 @@ export const SettingScreen = observer(function SettingScreen() {
 
   return (
     <Screen style={ROOT} preset="scroll">
-      <Text preset='bold' text="Cài đặt" style={{ marginTop: 200, fontSize: 18 }} />
+      {renderTopProfile()}
+      <Text preset='bold' text="Cài đặt" style={{ marginTop: 20, fontSize: 18 }} />
       {renderRow({ iconType: 'font-awesome', iconName: 'bell-o', title: "Thông báo" })}
       {renderRow({ iconType: 'material-community', iconName: 'lock-outline', title: "Quyền riêng tư và bảo mật" })}
       {renderRow({ iconType: 'material-community', iconName: 'chat-alert-outline', title: "Cài đặt trò chuyện" })}
