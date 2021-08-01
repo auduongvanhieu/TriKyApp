@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useState } from "react"
 import { observer } from "mobx-react-lite"
 import { TouchableOpacity, ViewStyle } from "react-native"
 import { Screen, Text } from "../../components"
 import { color } from "../../theme"
 import metrics from "../../theme/metrics"
 import { Icon } from "react-native-elements"
+import { Popup } from "../../components/popup/popup"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.white,
@@ -14,9 +15,11 @@ const ROOT: ViewStyle = {
 
 export const SettingScreen = observer(function SettingScreen() {
 
-  const renderRow = ({ iconType = 'font-awesome', iconName = 'bell-o', title = "Thông báo" }) => {
+  const [isVisiblePopupLogout, setIsVisiblePopupLogout] = useState(false);
+
+  const renderRow = ({ onPress= ()=>{}, iconType = 'font-awesome', iconName = 'bell-o', title = "Thông báo" }) => {
     return (
-      <TouchableOpacity style={{ flexDirection: 'row', width: '100%', paddingVertical: 15, borderBottomWidth: 1, borderBottomColor: color.line }}>
+      <TouchableOpacity onPress={onPress} style={{ flexDirection: 'row', width: '100%', paddingVertical: 15, borderBottomWidth: 1, borderBottomColor: color.line }}>
         <Icon type={iconType} name={iconName} size={20} />
         <Text preset='bold' text={title} style={{ marginStart: 10 }} />
       </TouchableOpacity>
@@ -29,7 +32,8 @@ export const SettingScreen = observer(function SettingScreen() {
       {renderRow({ iconType: 'font-awesome', iconName: 'bell-o', title: "Thông báo" })}
       {renderRow({ iconType: 'material-community', iconName: 'lock-outline', title: "Quyền riêng tư và bảo mật" })}
       {renderRow({ iconType: 'material-community', iconName: 'chat-alert-outline', title: "Cài đặt trò chuyện" })}
-      {renderRow({ iconType: 'material-community', iconName: 'location-exit', title: "Đăng xuất" })}
+      {renderRow({ iconType: 'material-community', iconName: 'location-exit', title: "Đăng xuất", onPress:()=>{setIsVisiblePopupLogout(true)} })}
+      <Popup isVisible={isVisiblePopupLogout} onClosePress={()=>setIsVisiblePopupLogout(false)} />
     </Screen>
   )
 })
