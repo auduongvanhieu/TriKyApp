@@ -1,11 +1,11 @@
-import React, { useState } from "react"
 import { observer } from "mobx-react-lite"
+import React, { useState } from "react"
 import { TouchableOpacity, ViewStyle } from "react-native"
+import { Icon } from "react-native-elements"
 import { Screen, Text } from "../../components"
+import { PopupYesNo } from "../../components/popup/popup-yes-no"
 import { color } from "../../theme"
 import metrics from "../../theme/metrics"
-import { Icon } from "react-native-elements"
-import { Popup } from "../../components/popup/popup"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.white,
@@ -33,7 +33,7 @@ export const SettingScreen = observer(function SettingScreen() {
       {renderRow({ iconType: 'material-community', iconName: 'lock-outline', title: "Quyền riêng tư và bảo mật" })}
       {renderRow({ iconType: 'material-community', iconName: 'chat-alert-outline', title: "Cài đặt trò chuyện" })}
       {renderRow({ iconType: 'material-community', iconName: 'location-exit', title: "Đăng xuất", onPress:()=>{setIsVisiblePopupLogout(true)} })}
-      <Popup isVisible={isVisiblePopupLogout} onClosePress={()=>setIsVisiblePopupLogout(false)} />
+      <PopupYesNo isVisible={isVisiblePopupLogout} onClosePress={()=>setIsVisiblePopupLogout(false)} content="Bạn có chắc chắn muốn đăng xuất?" />
     </Screen>
   )
 })
