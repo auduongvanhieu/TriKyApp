@@ -34,6 +34,7 @@ export const SettingScreen = observer(function SettingScreen() {
         <Image source={images.img_avatar_default} defaultSource={images.img_avatar_default} style={{width: 60, height: 60, borderRadius: 30}}/>
         <View style={{flex: 1, marginStart: 10}}>
           <Text preset='bold' text={profile?.name} style={{ marginStart: 10 }} />
+          <Text preset='bold' text={profile?.phone} style={{ marginStart: 10, marginTop: 5 }} />
         </View>
       </TouchableOpacity>
     )
