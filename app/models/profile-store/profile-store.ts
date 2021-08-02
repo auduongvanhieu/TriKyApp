@@ -4,7 +4,7 @@ const t = types
 export const ProfileStoreModel = types
   .model("ProfileStore")
   .props({
-    profile: t.optional(t.model({ role: t.string, gender: t.number, hobbies: t.array(t.string), hobby_list: t.array(t.model({ _id: t.number, code: t.string, name: t.string, bgColor: t.string, textColor: t.string, icon: t.string })), verified: t.boolean, phone: t.string, name: t.string, avatar: t.string, birthday: t.string, verification: t.string }),
+    profile: t.optional(t.model({ role: t.string, gender: t.number, hobbies: t.array(t.string), hobby_list: t.array(t.model({ _id: t.number, code: t.string, name: t.string, bgColor: t.string, textColor: t.string, icon: t.string })), verified: t.maybe(t.boolean), phone: t.string, name: t.string, avatar: t.string, birthday: t.string, verification: t.maybe(t.string) }),
       { "role": "", "gender": 0, "hobbies": [], "hobby_list": [], "verified": false, "phone": "", "name": "", "avatar": "", "birthday": "", "verification": "" }),
   })
   .extend(withEnvironment)
