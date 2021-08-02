@@ -31,10 +31,10 @@ export const SettingScreen = observer(function SettingScreen() {
     console.log('hieunv', 'profile', profile);
     return (
       <TouchableOpacity style={{flexDirection: 'row', marginTop: 40}}>
-        <Image source={images.img_avatar_default} defaultSource={images.img_avatar_default} style={{width: 60, height: 60, borderRadius: 30}}/>
+        <Image source={{uri: profile?.avatar}} defaultSource={images.img_avatar_default} style={{width: 60, height: 60, borderRadius: 30, backgroundColor: color.bgImage}}/>
         <View style={{flex: 1, marginStart: 10}}>
-          <Text preset='bold' text={profile?.name} style={{ marginStart: 10 }} />
-          <Text preset='bold' text={profile?.phone} style={{ marginStart: 10, marginTop: 5 }} />
+          <Text preset='bold' text={profile?.name} style={{}} />
+          <Text preset='bold' text={profile?.phone} style={{marginTop: 5 }} />
         </View>
       </TouchableOpacity>
     )

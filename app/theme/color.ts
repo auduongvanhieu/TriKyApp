@@ -3,6 +3,7 @@ export const color = {
   main: "#00FFFF",
   active: "#ddd000",
   inactive: "#e0e0e0",
+  bgImage: "#00FFFF",
   transparent: "rgba(0, 0, 0, 0)",
   background: "#ffffff",
   line: "#e6e6e6",
