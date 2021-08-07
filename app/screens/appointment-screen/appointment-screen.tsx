@@ -9,7 +9,7 @@ const ROOT: ViewStyle = {
   flex: 1,
 }
 
-export const HistoryScreen = observer(function HistoryScreen() {
+export const AppointmentScreen = observer(function AppointmentScreen() {
   return (
     <Screen style={ROOT} preset="scroll">
     </Screen>

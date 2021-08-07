@@ -40,7 +40,7 @@ export const HomeScreen = observer(function HomeScreen() {
     )
   }
 
-  const renderMenuTop = ({ image = images.ic_menu_meeting, title= "", onPress=()=>{} }) => {
+  const renderMenuTop = ({ image = images.ic_menu_appointment, title= "", onPress=()=>{} }) => {
     return (
       <TouchableOpacity onPress={onPress} style={{ alignItems: 'center' }}>
         <View style={{width: metrics.screenWidth/7, height: metrics.screenWidth/7, backgroundColor: "#F1F3F6", borderRadius: 10, alignItems: 'center', justifyContent: 'center'}}>
@@ -56,7 +56,7 @@ export const HomeScreen = observer(function HomeScreen() {
       {renderTopProfile()}
       <Divider style={{ marginVertical: 5 }} />
       <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: 10}}>
-        {renderMenuTop({image: images.ic_menu_meeting, title: "Tạo\ncuộc hẹn"})}
+        {renderMenuTop({image: images.ic_menu_appointment, title: "Tạo\ncuộc hẹn"})}
         {renderMenuTop({image: images.ic_menu_tri_ky_nearly, title: "Tri kỷ\nquanh đây"})}
         {renderMenuTop({image: images.ic_menu_place, title: "Địa điểm\nvui chơi"})}
         {renderMenuTop({image: images.ic_menu_event, title: "Sự kiện\nhấp dẫn"})}

@@ -3,7 +3,7 @@ import { NavigationContainer, NavigationContainerRef } from "@react-navigation/n
 import { createStackNavigator } from "@react-navigation/stack"
 import React, { useEffect } from "react"
 import { BackHandler, Platform, ToastAndroid, Image } from 'react-native'
-import { HistoryScreen, HomeScreen, LoginScreen, RegisterStep1Screen, RegisterStep2Screen, RegisterStep3Screen, SplashScreen, DemoScreen, DemoListScreen, ChatScreen, SettingScreen } from "../screens"
+import { AppointmentScreen, HomeScreen, LoginScreen, RegisterStep1Screen, RegisterStep2Screen, RegisterStep3Screen, SplashScreen, DemoScreen, DemoListScreen, ChatScreen, SettingScreen } from "../screens"
 import { AppAction } from '../services/app-action/app-action'
 import { color } from '../theme/color'
 import { images } from '../theme/images'
@@ -27,8 +27,8 @@ const screenOptions = ({ route }) => ({
     let iconName = images.ic_menu_home_1;
     if (route.name === 'home') {
       iconName = focused ? images.ic_menu_home_2 : images.ic_menu_home_1;
-    } else if (route.name === 'history') {
-      iconName = focused ? images.ic_menu_history_2 : images.ic_menu_history_1;
+    } else if (route.name === 'appointment') {
+      iconName = focused ? images.ic_menu_appointment_2 : images.ic_menu_appointment_1;
     } else if (route.name === 'chat') {
       iconName = focused ? images.ic_menu_chat_2 : images.ic_menu_chat_1;
     } else if (route.name === 'setting') {
@@ -44,7 +44,7 @@ function MainTabs() {
       tabBarPosition='bottom' screenOptions={screenOptions}
       tabBarOptions={{ activeTintColor: color.active, inactiveTintColor: color.inactive, indicatorStyle: {backgroundColor: color.active}, tabStyle: { paddingVertical: 2 }, style: { borderTopWidth: 0, marginTop: 1 }, labelStyle: { fontSize: 12, textTransform: null, marginTop: 0 }, showIcon: true }}>
       <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: "Trang chủ" }} />
-      <Tab.Screen name="history" component={HistoryScreen} options={{ tabBarLabel: "Lịch sử" }} />
+      <Tab.Screen name="appointment" component={AppointmentScreen} options={{ tabBarLabel: "Cuộc hẹn" }} />
       <Tab.Screen name="chat" component={ChatScreen} options={{ tabBarLabel: "Chat" }} />
       <Tab.Screen name="setting" component={SettingScreen} options={{ tabBarLabel: "Cài đặt" }} />
     </Tab.Navigator>
