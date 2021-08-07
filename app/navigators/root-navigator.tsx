@@ -23,18 +23,19 @@ const Stack = createStackNavigator<RootParamList>()
 const Tab = createMaterialTopTabNavigator();
 
 const screenOptions = ({ route }) => ({
-  tabBarIcon: ({ focused, color, size }) => {
+  tabBarIcon: ({ focused, color, size = 22 }) => {
     let iconName = images.ic_menu_home_1;
     if (route.name === 'home') {
       iconName = focused ? images.ic_menu_home_2 : images.ic_menu_home_1;
     } else if (route.name === 'appointment') {
       iconName = focused ? images.ic_menu_appointment_2 : images.ic_menu_appointment_1;
+      size = 25
     } else if (route.name === 'chat') {
       iconName = focused ? images.ic_menu_chat_2 : images.ic_menu_chat_1;
     } else if (route.name === 'setting') {
       iconName = focused ? images.ic_menu_setting_2 : images.ic_menu_setting_1;
     }
-    return <Image source={iconName} style={{ width: 20, height: 20, alignSelf: 'center' }} />;
+    return <Image source={iconName} style={{ width: size, height: size, alignSelf: 'center' }} />;
   }
 })
 
