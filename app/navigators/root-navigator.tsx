@@ -3,7 +3,10 @@ import { NavigationContainer, NavigationContainerRef } from "@react-navigation/n
 import { createStackNavigator } from "@react-navigation/stack"
 import React, { useEffect } from "react"
 import { BackHandler, Platform, ToastAndroid, Image } from 'react-native'
-import { AppointmentScreen, HomeScreen, LoginScreen, RegisterStep1Screen, RegisterStep2Screen, RegisterStep3Screen, SplashScreen, DemoScreen, DemoListScreen, ChatScreen, SettingScreen } from "../screens"
+import {
+  AppointmentScreen, HomeScreen, LoginScreen, RegisterStep1Screen, RegisterStep2Screen, RegisterStep3Screen, SplashScreen, DemoScreen,
+  DemoListScreen, ChatScreen, SettingScreen, ProfileScreen
+} from "../screens"
 import { AppAction } from '../services/app-action/app-action'
 import { color } from '../theme/color'
 import { images } from '../theme/images'
@@ -15,8 +18,9 @@ export type RootParamList = {
   registerStep3: undefined,
   main: undefined,
   mainStack: undefined,
-  demo: undefined
-  demoList: undefined
+  demo: undefined,
+  demoList: undefined,
+  profile: undefined,
 }
 
 const Stack = createStackNavigator<RootParamList>()
@@ -43,7 +47,7 @@ function MainTabs() {
   return (
     <Tab.Navigator
       tabBarPosition='bottom' screenOptions={screenOptions}
-      tabBarOptions={{ activeTintColor: color.active, inactiveTintColor: color.inactive, indicatorStyle: {backgroundColor: color.active}, tabStyle: { paddingVertical: 2 }, style: { borderTopWidth: 0, marginTop: 1 }, labelStyle: { fontSize: 12, textTransform: null, marginTop: 0 }, showIcon: true }}>
+      tabBarOptions={{ activeTintColor: color.active, inactiveTintColor: color.inactive, indicatorStyle: { backgroundColor: color.active }, tabStyle: { paddingVertical: 2 }, style: { borderTopWidth: 0, marginTop: 1 }, labelStyle: { fontSize: 12, textTransform: null, marginTop: 0 }, showIcon: true }}>
       <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: "Trang chủ" }} />
       <Tab.Screen name="appointment" component={AppointmentScreen} options={{ tabBarLabel: "Cuộc hẹn" }} />
       <Tab.Screen name="chat" component={ChatScreen} options={{ tabBarLabel: "Chat" }} />
@@ -63,6 +67,7 @@ const RootStack = () => {
       <Stack.Screen name="main" component={MainTabs} />
       <Stack.Screen name="demo" component={DemoScreen} />
       <Stack.Screen name="demoList" component={DemoListScreen} />
+      <Stack.Screen name="profile" component={ProfileScreen} />
     </Stack.Navigator>
   )
 }

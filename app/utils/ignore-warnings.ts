@@ -9,3 +9,4 @@ LogBox.ignoreLogs([
   "Require cycle:",
   "Warning:",
 ])
+LogBox.ignoreAllLogs();

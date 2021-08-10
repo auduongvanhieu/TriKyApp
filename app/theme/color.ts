@@ -12,7 +12,9 @@ export const color = {
   error: "#dd3333",
   storybookDarkBg: "#1d1d1d",
   storybookTextColor: "#1d1d1d",
-  // palette:
+  palette: {
+    black: "#1d1d1d",
+  },
   black: "#1d1d1d",
   white: "#ffffff",
   offWhite: "#e6e6e6",

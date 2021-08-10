@@ -6,7 +6,7 @@ import { Divider } from "react-native-elements/dist/divider/Divider"
 import { rootStoreRef } from "../../app"
 import { Screen, Text } from "../../components"
 import { PopupYesNo } from "../../components/popup/popup-yes-no"
-import { requestReplace } from "../../services/app-action/app-action"
+import { requestNavigate, requestReplace } from "../../services/app-action/app-action"
 import { color } from "../../theme"
 import { images } from "../../theme/images"
 import metrics from "../../theme/metrics"
@@ -31,7 +31,7 @@ export const SettingScreen = observer(function SettingScreen() {
   const renderTopProfile = () => {
     console.log('hieunv', 'profile', profile);
     return (
-      <TouchableOpacity style={{flexDirection: 'row', marginTop: 40}}>
+      <TouchableOpacity onPress={()=>{requestNavigate("profile")}} style={{flexDirection: 'row', marginTop: 40}}>
         <Image source={{uri: profile?.avatar}} defaultSource={images.img_avatar_default} style={{width: 65, height: 65, borderRadius: 32.5, backgroundColor: color.bgImage}}/>
         <View style={{flex: 1, marginStart: 10}}>
           <Text preset='default' text={profile?.name} style={{}} />
