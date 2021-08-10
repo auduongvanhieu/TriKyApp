@@ -7,6 +7,7 @@ export const images = {
   ic_gender_girl: require("../../assets/icons/ic_gender_girl.png"),
   ic_gender_gay: require("../../assets/icons/ic_gender_gay.png"),
   ic_gender_lesbian: require("../../assets/icons/ic_gender_lesbian.png"),
+  ic_star: require("../../assets/icons/ic_star.png"),
   // Menu
   ic_menu_home_1: require("../../assets/menu/ic_menu_home_1.png"),
   ic_menu_home_2: require("../../assets/menu/ic_menu_home_2.png"),

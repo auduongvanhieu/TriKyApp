@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite"
 import React, { useEffect } from "react"
 import { ViewStyle, TouchableOpacity, Image, View } from "react-native"
 import { Divider } from "react-native-elements/dist/divider/Divider"
+import { Icon } from "react-native-elements/dist/icons/Icon"
 import { rootStoreRef } from "../../app"
 import { Screen, Text } from "../../components"
 import { api, resetApi } from "../../services/api"
@@ -34,8 +35,14 @@ export const HomeScreen = observer(function HomeScreen() {
         <Image source={{ uri: profile?.avatar }} defaultSource={images.img_avatar_default} style={{ width: 50, height: 50, borderRadius: 30, backgroundColor: color.bgImage }} />
         <View style={{ flex: 1, marginStart: 10, justifyContent: 'center' }}>
           <Text preset='default' text={profile?.name} style={{ fontStyle: 'italic' }} />
-          <Text preset='default' text={"Người chơi mới"} style={{ marginTop: 3, color: color.primary, fontStyle: 'italic', fontSize: 12 }} />
+          <Text preset='default' text={profile?.title_list[0]?.name} style={{ marginTop: 3, color: color.primary, fontStyle: 'italic', fontSize: 12 }} />
         </View>
+        <TouchableOpacity style={{padding: 7}}>
+          <Icon type="feather" name="bell" size={25}/>
+          <View style={{backgroundColor: 'red', position: 'absolute', borderRadius: 50, right: 0, aspectRatio: 1, minWidth: 18, minHeight: 18, alignItems: 'center', justifyContent: 'center'}}>
+            <Text style={{color: 'white', fontSize: 10}}>{1}</Text>
+          </View>
+        </TouchableOpacity>
       </TouchableOpacity>
     )
   }

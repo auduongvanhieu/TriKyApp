@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite"
 import React, { useState } from "react"
 import { TouchableOpacity, ViewStyle, Image, View } from "react-native"
 import { Icon } from "react-native-elements"
+import { Divider } from "react-native-elements/dist/divider/Divider"
 import { rootStoreRef } from "../../app"
 import { Screen, Text } from "../../components"
 import { PopupYesNo } from "../../components/popup/popup-yes-no"
@@ -31,12 +32,36 @@ export const SettingScreen = observer(function SettingScreen() {
     console.log('hieunv', 'profile', profile);
     return (
       <TouchableOpacity style={{flexDirection: 'row', marginTop: 40}}>
-        <Image source={{uri: profile?.avatar}} defaultSource={images.img_avatar_default} style={{width: 60, height: 60, borderRadius: 30, backgroundColor: color.bgImage}}/>
+        <Image source={{uri: profile?.avatar}} defaultSource={images.img_avatar_default} style={{width: 65, height: 65, borderRadius: 32.5, backgroundColor: color.bgImage}}/>
         <View style={{flex: 1, marginStart: 10}}>
-          <Text preset='bold' text={profile?.name} style={{}} />
-          <Text preset='bold' text={profile?.phone} style={{marginTop: 5 }} />
+          <Text preset='default' text={profile?.name} style={{}} />
+          <Text preset='default' text={profile?.phone} style={{marginTop: 5 }} />
+          <View style={{flexDirection: 'row', marginTop: 5, alignItems: 'center'}}>
+            <Image source={images.ic_star} style={{width: 15, height: 15}}/>
+            <Text preset='default' text={`${profile?.star}`} style={{marginStart: 5}} />
+          </View>
         </View>
       </TouchableOpacity>
+    )
+  }
+
+  const renderSlogan = () => {
+    return (
+      <View style={{marginTop: 20}}>
+        <Text preset='bold' text="Châm ngôn" style={{}} />
+        <Text preset='default' text={profile.slogan} style={{fontStyle:"italic"}} />
+        <Divider style={{marginTop: 5}} />
+      </View>
+    )
+  }
+
+  const renderTitle = () => {
+    return (
+      <View style={{marginTop: 10}}>
+        <Text preset='bold' text="Danh hiệu" style={{}} />
+        <Text preset='default' text={profile.title_list[0]?.name} style={{fontStyle:"italic", color: profile.title_list[0]?.textColor}} />
+        <Divider style={{marginTop: 5}} />
+      </View>
     )
   }
 
@@ -44,7 +69,7 @@ export const SettingScreen = observer(function SettingScreen() {
     return (
       <TouchableOpacity onPress={onPress} style={{ flexDirection: 'row', width: '100%', paddingVertical: 15, borderBottomWidth: 1, borderBottomColor: color.line }}>
         <Icon type={iconType} name={iconName} size={20} />
-        <Text preset='bold' text={title} style={{ marginStart: 10 }} />
+        <Text preset='default' text={title} style={{ marginStart: 10 }} />
       </TouchableOpacity>
     )
   }
@@ -52,7 +77,9 @@ export const SettingScreen = observer(function SettingScreen() {
   return (
     <Screen style={ROOT} preset="scroll">
       {renderTopProfile()}
-      <Text preset='bold' text="Cài đặt" style={{ marginTop: 20, fontSize: 18 }} />
+      {renderSlogan()}
+      {renderTitle()}
+      <Text preset='bold' text="Cài đặt" style={{ marginTop: 20}} />
       {renderRow({ iconType: 'font-awesome', iconName: 'bell-o', title: "Thông báo" })}
       {renderRow({ iconType: 'material-community', iconName: 'lock-outline', title: "Quyền riêng tư và bảo mật" })}
       {renderRow({ iconType: 'material-community', iconName: 'chat-alert-outline', title: "Cài đặt trò chuyện" })}
