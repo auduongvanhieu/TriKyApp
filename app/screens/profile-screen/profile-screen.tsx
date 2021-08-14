@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { FlatList, Image, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Divider } from "react-native-elements/dist/divider/Divider"
 import { Icon } from "react-native-elements/dist/icons/Icon"
@@ -14,6 +14,7 @@ import { color } from "../../theme"
 import { images } from "../../theme/images"
 import metrics from "../../theme/metrics"
 import { convertDateToString, getGenderName } from "../../utils/functions"
+import ImageView from 'react-native-image-viewing'
 
 const ROOT: ViewStyle = {
   backgroundColor: color.white,
@@ -25,11 +26,15 @@ export const ProfileScreen = observer(function ProfileScreen() {
 
   const profile = rootStoreRef.profileStore.profile
 
+  const [visibleViewing, setVisibleViewing] = useState(false);
+
   const renderTopProfile = () => {
     console.log('hieunv', 'profile', profile);
     return (
-      <TouchableOpacity style={{ flexDirection: 'row', marginTop: 40 }}>
-        <Image source={{ uri: profile?.avatar }} defaultSource={images.img_avatar_default} style={{ width: 65, height: 65, borderRadius: 32.5, backgroundColor: color.bgImage }} />
+      <View style={{ flexDirection: 'row', marginTop: 40 }}>
+        <TouchableOpacity onPress={()=>setVisibleViewing(true)}>
+          <Image source={{ uri: profile?.avatar }} defaultSource={images.img_avatar_default} style={{ width: 65, height: 65, borderRadius: 32.5, backgroundColor: color.bgImage }} />
+        </TouchableOpacity>
         <View style={{ flex: 1, marginStart: 10 }}>
           <Text preset='default' text={profile?.name} style={{}} />
           <Text preset='default' text={profile?.phone} style={{ marginTop: 5 }} />
@@ -38,7 +43,7 @@ export const ProfileScreen = observer(function ProfileScreen() {
             <Text preset='default' text={`${profile?.star}`} style={{ marginStart: 5 }} />
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
     )
   }
 
@@ -112,7 +117,7 @@ export const ProfileScreen = observer(function ProfileScreen() {
 
   return (
     <Screen style={ROOT} preset="scroll">
-      <ButtonClose/>
+      <ButtonClose />
       {renderTopProfile()}
       {renderGenderAndBirth()}
       {renderSlogan()}
@@ -120,6 +125,8 @@ export const ProfileScreen = observer(function ProfileScreen() {
       {renderHobbies()}
       {renderEmail()}
       {renderButton()}
+      {/* Popup show image */}
+      <ImageView images={[{uri: profile.avatar}]} imageIndex={0} visible={visibleViewing} onRequestClose={() => setVisibleViewing(false)} />
     </Screen>
   )
 })
