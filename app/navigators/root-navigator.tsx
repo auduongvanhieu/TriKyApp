@@ -7,6 +7,7 @@ import {
   AppointmentScreen, HomeScreen, LoginScreen, RegisterStep1Screen, RegisterStep2Screen, RegisterStep3Screen, SplashScreen, DemoScreen,
   DemoListScreen, ChatScreen, SettingScreen, ProfileScreen
 } from "../screens"
+import { ProfileUpdateScreen } from '../screens/profile-screen/profile-update-screen'
 import { AppAction } from '../services/app-action/app-action'
 import { color } from '../theme/color'
 import { images } from '../theme/images'
@@ -21,6 +22,7 @@ export type RootParamList = {
   demo: undefined,
   demoList: undefined,
   profile: undefined,
+  profileUpdate: undefined,
 }
 
 const Stack = createStackNavigator<RootParamList>()
@@ -68,6 +70,7 @@ const RootStack = () => {
       <Stack.Screen name="demo" component={DemoScreen} />
       <Stack.Screen name="demoList" component={DemoListScreen} />
       <Stack.Screen name="profile" component={ProfileScreen} />
+      <Stack.Screen name="profileUpdate" component={ProfileUpdateScreen} />
     </Stack.Navigator>
   )
 }

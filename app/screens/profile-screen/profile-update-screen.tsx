@@ -9,7 +9,7 @@ import { ButtonClose } from "../../components/button/button-close"
 import { ButtonMain } from "../../components/button/button-main"
 import { CategoryItem } from "../../components/common/category-item"
 import { TitlesItem } from "../../components/common/titles-item"
-import { requestNavigate } from "../../services/app-action/app-action"
+import { requestGoBack } from "../../services/app-action/app-action"
 import { color } from "../../theme"
 import { images } from "../../theme/images"
 import metrics from "../../theme/metrics"
@@ -21,12 +21,11 @@ const ROOT: ViewStyle = {
   paddingHorizontal: metrics.baseMargin
 }
 
-export const ProfileScreen = observer(function ProfileScreen() {
+export const ProfileUpdateScreen = observer(function ProfileScreen() {
 
   const profile = rootStoreRef.profileStore.profile
 
   const renderTopProfile = () => {
-    console.log('hieunv', 'profile', profile);
     return (
       <TouchableOpacity style={{ flexDirection: 'row', marginTop: 40 }}>
         <Image source={{ uri: profile?.avatar }} defaultSource={images.img_avatar_default} style={{ width: 65, height: 65, borderRadius: 32.5, backgroundColor: color.bgImage }} />
@@ -104,15 +103,15 @@ export const ProfileScreen = observer(function ProfileScreen() {
   const renderButton = () => {
     return (
       <View style={{ width: '80%', marginTop: 20, alignSelf: 'center' }}>
-        <ButtonMain onPress={() => requestNavigate("profileUpdate")} text="Cập nhật" />
-        <ButtonMain type={1} text="Đổi mật khẩu" style={{ marginTop: 10 }} />
+        <ButtonMain text="Lưu" />
+        <ButtonMain onPress={() => requestGoBack()} type={1} text="Hủy" style={{ marginTop: 10 }} />
       </View>
     )
   }
 
   return (
     <Screen style={ROOT} preset="scroll">
-      <ButtonClose/>
+      <ButtonClose />
       {renderTopProfile()}
       {renderGenderAndBirth()}
       {renderSlogan()}
