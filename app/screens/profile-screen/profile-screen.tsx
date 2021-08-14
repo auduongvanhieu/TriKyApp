@@ -80,9 +80,8 @@ export const ProfileScreen = observer(function ProfileScreen() {
             keyExtractor={(item) => String(item._id)}
             data={profile.hobby_list}
             numColumns={3}
-            columnWrapperStyle={{ justifyContent: 'space-between' }}
             renderItem={({ item, index }) => (
-              <CategoryItem item={item} style={{ minWidth: '30%', marginTop: 10 }} />
+              <CategoryItem item={item} style={{ minWidth: '30%', marginTop: 10, marginEnd: '3%' }} />
             )} />
         </View>
       </View>
