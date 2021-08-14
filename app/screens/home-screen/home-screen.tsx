@@ -1,10 +1,11 @@
 import { observer } from "mobx-react-lite"
 import React, { useEffect } from "react"
-import { ViewStyle, TouchableOpacity, Image, View } from "react-native"
+import { Image, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Divider } from "react-native-elements/dist/divider/Divider"
 import { Icon } from "react-native-elements/dist/icons/Icon"
 import { rootStoreRef } from "../../app"
 import { Screen, Text } from "../../components"
+import { TitlesItem } from "../../components/common/titles-item"
 import { api, resetApi } from "../../services/api"
 import { color } from "../../theme"
 import { images } from "../../theme/images"
@@ -35,7 +36,7 @@ export const HomeScreen = observer(function HomeScreen() {
         <Image source={{ uri: profile?.avatar }} defaultSource={images.img_avatar_default} style={{ width: 50, height: 50, borderRadius: 30, backgroundColor: color.bgImage }} />
         <View style={{ flex: 1, marginStart: 10, justifyContent: 'center' }}>
           <Text preset='default' text={profile?.name} style={{ fontStyle: 'italic' }} />
-          <Text preset='default' text={profile?.title_list[0]?.name} style={{ marginTop: 3, color: color.primary, fontStyle: 'italic', fontSize: 12 }} />
+          <TitlesItem title_list={profile?.title_list}/>
         </View>
         <TouchableOpacity style={{padding: 7}}>
           <Icon type="feather" name="bell" size={25}/>

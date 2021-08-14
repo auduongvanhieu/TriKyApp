@@ -1,10 +1,11 @@
 import { observer } from "mobx-react-lite"
 import React, { useState } from "react"
-import { TouchableOpacity, ViewStyle, Image, View } from "react-native"
+import { Image, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Icon } from "react-native-elements"
 import { Divider } from "react-native-elements/dist/divider/Divider"
 import { rootStoreRef } from "../../app"
 import { Screen, Text } from "../../components"
+import { TitlesItem } from "../../components/common/titles-item"
 import { PopupYesNo } from "../../components/popup/popup-yes-no"
 import { requestNavigate, requestReplace } from "../../services/app-action/app-action"
 import { color } from "../../theme"
@@ -59,7 +60,7 @@ export const SettingScreen = observer(function SettingScreen() {
     return (
       <View style={{marginTop: 10}}>
         <Text preset='bold' text="Danh hiệu" style={{}} />
-        <Text preset='default' text={profile.title_list[0]?.name} style={{fontStyle:"italic", color: profile.title_list[0]?.textColor}} />
+        <TitlesItem title_list={profile?.title_list}/>
         <Divider style={{marginTop: 5}} />
       </View>
     )

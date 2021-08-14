@@ -6,6 +6,7 @@ import { Icon } from "react-native-elements/dist/icons/Icon"
 import { rootStoreRef } from "../../app"
 import { Screen, Text } from "../../components"
 import { CategoryItem } from "../../components/common/category-item"
+import { TitlesItem } from "../../components/common/titles-item"
 import { color } from "../../theme"
 import { images } from "../../theme/images"
 import metrics from "../../theme/metrics"
@@ -63,7 +64,7 @@ export const ProfileScreen = observer(function ProfileScreen() {
     return (
       <View style={{ marginTop: 10 }}>
         <Text preset='bold' text="Danh hiệu" style={{}} />
-        <Text preset='default' text={profile.title_list[0]?.name} style={{ fontStyle: "italic", color: profile.title_list[0]?.textColor }} />
+        <TitlesItem title_list={profile?.title_list}/>
         <Divider style={{ marginTop: 5 }} />
       </View>
     )
