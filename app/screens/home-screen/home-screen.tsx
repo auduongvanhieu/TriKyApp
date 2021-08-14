@@ -7,6 +7,7 @@ import { rootStoreRef } from "../../app"
 import { Screen, Text } from "../../components"
 import { TitlesItem } from "../../components/common/titles-item"
 import { api, resetApi } from "../../services/api"
+import { requestNavigate } from "../../services/app-action/app-action"
 import { color } from "../../theme"
 import { images } from "../../theme/images"
 import metrics from "../../theme/metrics"
@@ -32,7 +33,7 @@ export const HomeScreen = observer(function HomeScreen() {
   const renderTopProfile = () => {
     console.log('hieunv', 'profile', profile);
     return (
-      <TouchableOpacity style={{ flexDirection: 'row', marginTop: metrics.statusBarHeight, paddingHorizontal: metrics.baseMargin }}>
+      <TouchableOpacity onPress={()=>requestNavigate("profile")} style={{ flexDirection: 'row', marginTop: metrics.statusBarHeight, paddingHorizontal: metrics.baseMargin }}>
         <Image source={{ uri: profile?.avatar }} defaultSource={images.img_avatar_default} style={{ width: 50, height: 50, borderRadius: 30, backgroundColor: color.bgImage }} />
         <View style={{ flex: 1, marginStart: 10, justifyContent: 'center' }}>
           <Text preset='default' text={profile?.name} style={{ fontStyle: 'italic' }} />

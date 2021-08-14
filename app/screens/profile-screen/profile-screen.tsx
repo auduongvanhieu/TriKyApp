@@ -1,8 +1,9 @@
 import { observer } from "mobx-react-lite"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { FlatList, Image, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Divider } from "react-native-elements/dist/divider/Divider"
 import { Icon } from "react-native-elements/dist/icons/Icon"
+import ImageView from 'react-native-image-viewing'
 import { rootStoreRef } from "../../app"
 import { Screen, Text } from "../../components"
 import { ButtonClose } from "../../components/button/button-close"
@@ -14,7 +15,6 @@ import { color } from "../../theme"
 import { images } from "../../theme/images"
 import metrics from "../../theme/metrics"
 import { convertDateToString, getGenderName } from "../../utils/functions"
-import ImageView from 'react-native-image-viewing'
 
 const ROOT: ViewStyle = {
   backgroundColor: color.white,
