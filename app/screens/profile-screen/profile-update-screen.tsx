@@ -15,6 +15,8 @@ import { color } from "../../theme"
 import { images } from "../../theme/images"
 import metrics from "../../theme/metrics"
 import { convertDateToString } from "../../utils/functions"
+import TextInputMask from 'react-native-text-input-mask';
+import { api } from "../../services/api"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.white,
@@ -31,7 +33,7 @@ const INPUT: TextStyle = {
 }
 
 const VIEW_INPUT_MULTI: ViewStyle = {
-  width: '100%', flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, marginTop: 5
+  width: '100%', flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, paddingVertical: 5
 }
 
 const INPUT_MULTI: TextStyle = {
@@ -40,7 +42,8 @@ const INPUT_MULTI: TextStyle = {
 
 export const ProfileUpdateScreen = observer(function ProfileScreen() {
 
-  const profile = rootStoreRef.profileStore.profile
+  const {profile} = rootStoreRef.profileStore
+  const {categories} = rootStoreRef.generalStore
 
   const [avatar, setAvatar] = useState("");
   const [name, setName] = useState("");
@@ -50,7 +53,6 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
   const [titles, setTitles] = useState([]);
   const [titleList, setTitleList] = useState([]);
   const [hobbies, setHobbies] = useState([]);
-  const [hobbyList, setHobbyList] = useState([]);
   const [email, setEmail] = useState("");
   const [visibleViewing, setVisibleViewing] = useState(false);
 
@@ -62,10 +64,13 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
     setSlogan(profile.slogan)
     setTitles(profile.titles)
     setTitleList(profile.title_list)
-    setHobbies(profile.hobbies)
-    setHobbyList(profile.hobby_list)
+    setHobbies([...profile.hobbies])
     setEmail(profile.email)
   }, [])
+
+  async function onRefresh() {
+    await api.getCategories({ showLoading: false })
+  }
 
   const renderTopProfile = () => {
     return (
@@ -91,7 +96,7 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
     return (
       <View style={VIEW_INPUT}>
         <Icon type="font-awesome" name="user-circle-o" size={16} />
-        <TextInput value={name} onChangeText={value => setName(value)} style={INPUT} />
+        <TextInput placeholder="Nhập họ và tên" value={name} onChangeText={value => setName(value)} style={INPUT} />
       </View>
     )
   }
@@ -100,7 +105,7 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
     return (
       <View style={VIEW_INPUT}>
         <Icon type="material-community" name="cake" size={16} />
-        <TextInput value={birthday} onChangeText={value => setBirthday(value)} style={INPUT} />
+        <TextInputMask mask={'[00]/[00]/[0000]'} keyboardType='number-pad' placeholder="DD/MM/YYYY" value={birthday} onChangeText={value => setBirthday(value)} style={INPUT} />
       </View>
     )
   }
@@ -110,7 +115,7 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
       <View style={{width: '100%', marginTop: 20}}>
         <Text preset='bold' text="Châm ngôn sống" style={{}} />
         <View style={VIEW_INPUT_MULTI}>
-          <TextInput value={slogan} onChangeText={value => setSlogan(value)} style={INPUT_MULTI} multiline={true} />
+          <TextInput placeholder="Nhập châm ngôn" value={slogan} onChangeText={value => setSlogan(value)} style={INPUT_MULTI} multiline={true} />
         </View>
       </View>
     )
@@ -120,10 +125,21 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
     return (
       <View style={{ marginTop: 20 }}>
         <Text preset='bold' text="Danh hiệu" style={{}} />
-        <TitlesItem title_list={profile?.title_list} />
-        <Divider style={{ marginTop: 5 }} />
+        <TouchableOpacity style={VIEW_INPUT_MULTI}>
+          <TitlesItem title_list={profile?.title_list} style={{flexGrow: 1}}/>
+          <Icon type="ionicon" name="search-outline" size={16} />
+        </TouchableOpacity>
       </View>
     )
+  }
+
+  const onPressCategory = (item) => {
+    if (!hobbies.includes(item.code))
+      hobbies.push(item.code)
+    else
+      hobbies.splice(hobbies.indexOf(item.code), 1)
+    console.log('hieunv', 'hobbies', hobbies);
+    setHobbies([...hobbies])
   }
 
   const renderHobbies = () => {
@@ -134,10 +150,10 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
           <FlatList
             scrollEnabled={false}
             keyExtractor={(item) => String(item._id)}
-            data={profile.hobby_list}
+            data={[...categories]}
             numColumns={3}
             renderItem={({ item, index }) => (
-              <CategoryItem item={item} style={{ minWidth: '30%', marginTop: 10, marginEnd: '3%' }} />
+              <CategoryItem onPress={() => onPressCategory(item)} isSelect={hobbies.includes(item.code)} item={item} style={{ minWidth: '30%', marginTop: 10, marginEnd: '3%' }} />
             )} />
         </View>
       </View>
@@ -148,7 +164,7 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
     return (
       <View style={VIEW_INPUT}>
         <Icon type="ionicon" name="mail-unread-outline" size={16} />
-        <TextInput value={email} onChangeText={value => setEmail(value)} style={INPUT} />
+        <TextInput placeholder="Nhập email" value={email} onChangeText={value => setEmail(value)} style={INPUT} />
       </View>
     )
   }
@@ -163,7 +179,7 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
   }
 
   return (
-    <Screen style={ROOT} preset="scroll">
+    <Screen style={ROOT} preset="scroll" onRefresh={onRefresh}>
       <ButtonClose />
       {renderTopProfile()}
       {renderName()}
