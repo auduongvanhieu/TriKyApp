@@ -1,6 +1,7 @@
 export const color = {
   primary: "#00D6D6",
   main: "#00FFFF",
+  cancel: "#00FFE0",
   active: "#ddd000",
   inactive: "#e0e0e0",
   bgImage: "#00FFFF",

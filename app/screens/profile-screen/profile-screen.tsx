@@ -5,6 +5,7 @@ import { Divider } from "react-native-elements/dist/divider/Divider"
 import { Icon } from "react-native-elements/dist/icons/Icon"
 import { rootStoreRef } from "../../app"
 import { Screen, Text } from "../../components"
+import { ButtonMain } from "../../components/button/button-main"
 import { CategoryItem } from "../../components/common/category-item"
 import { TitlesItem } from "../../components/common/titles-item"
 import { color } from "../../theme"
@@ -98,6 +99,15 @@ export const ProfileScreen = observer(function ProfileScreen() {
     )
   }
 
+  const renderButton = () => {
+    return (
+      <View style={{width: '80%', marginTop: 20, alignSelf: 'center'}}>
+        <ButtonMain text="Cập nhật" />
+        <ButtonMain type={1} text="Đổi mật khẩu" style={{marginTop: 10}} />
+      </View>
+    )
+  }
+
   return (
     <Screen style={ROOT} preset="scroll">
       {renderTopProfile()}
@@ -106,6 +116,7 @@ export const ProfileScreen = observer(function ProfileScreen() {
       {renderTitle()}
       {renderHobbies()}
       {renderEmail()}
+      {renderButton()}
     </Screen>
   )
 })
