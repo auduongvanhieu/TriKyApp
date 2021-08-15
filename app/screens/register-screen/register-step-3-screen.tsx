@@ -69,7 +69,7 @@ export const RegisterStep3Screen = observer(function RegisterStep3Screen() {
       isValid = false
     }
     if (!isValidDate(birthday)) {
-      setWarnBirthday('Vui lòng ngày sinh hợp lệ')
+      setWarnBirthday('Vui lòng nhập ngày sinh hợp lệ')
       isValid = false
     }
     if (hobbies.length == 0) {

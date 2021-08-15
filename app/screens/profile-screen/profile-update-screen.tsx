@@ -1,43 +1,43 @@
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useState } from "react"
-import { FlatList, Image, TextInput, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
+import { FlatList, Image, ScrollView, TextInput, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Divider } from "react-native-elements/dist/divider/Divider"
 import { Icon } from "react-native-elements/dist/icons/Icon"
 import ImageView from 'react-native-image-viewing'
+import TextInputMask from 'react-native-text-input-mask'
 import { rootStoreRef } from "../../app"
 import { Popup, Screen, Text } from "../../components"
 import { ButtonClose } from "../../components/button/button-close"
 import { ButtonMain } from "../../components/button/button-main"
 import { CategoryItem } from "../../components/common/category-item"
 import { TitlesItem } from "../../components/common/titles-item"
+import { WarnText } from "../../components/text/warn-text"
+import { api } from "../../services/api"
 import { requestGoBack } from "../../services/app-action/app-action"
 import { color } from "../../theme"
 import { images } from "../../theme/images"
 import metrics from "../../theme/metrics"
-import { convertDateToString } from "../../utils/functions"
-import TextInputMask from 'react-native-text-input-mask';
-import { api } from "../../services/api"
+import { convertDateToString, isValidDate } from "../../utils/functions"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.white,
   flex: 1,
   paddingHorizontal: metrics.baseMargin
 }
-
 const VIEW_INPUT: ViewStyle = {
   marginTop: 20, width: '100%', flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1
 }
-
 const INPUT: TextStyle = {
   padding: 0, marginHorizontal: 5, flexGrow: 1, color: 'black'
 }
-
 const VIEW_INPUT_MULTI: ViewStyle = {
-  width: '100%', flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, paddingVertical: 5
+  width: '100%', flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, paddingVertical: 5, flexWrap: 'wrap'
 }
-
 const INPUT_MULTI: TextStyle = {
   padding: 0, flexGrow: 1, color: 'black'
+}
+const TOUCH_GENDER: ViewStyle = {
+  flexDirection: 'row', alignItems: 'center', marginRight: 20, paddingVertical: 5
 }
 
 export const ProfileUpdateScreen = observer(function ProfileScreen() {
@@ -58,6 +58,10 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
   const [visibleViewing, setVisibleViewing] = useState(false);
   const [isVisibleChooseTitles, setVisibleChooseTitles] = useState(false);
 
+  const [warnName, setWarnName] = useState(undefined);
+  const [warnBirthday, setWarnBirthday] = useState(undefined);
+  const [warnHobbies, setWarnHobbies] = useState(undefined);
+
   useEffect(() => {
     setAvatar(profile.avatar)
     setName(profile.name)
@@ -74,6 +78,31 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
   async function onRefresh() {
     await api.getCategories({ showLoading: false })
     await api.getTitles({ showLoading: false })
+  }
+
+  const checkValidInput = () => {
+    var isValid = true
+    setWarnName(undefined)
+    setWarnBirthday(undefined)
+    setWarnHobbies(undefined)
+    if (name == '') {
+      setWarnName('Vui lòng nhập họ tên')
+      isValid = false
+    }
+    if (!isValidDate(birthday)) {
+      setWarnBirthday('Vui lòng nhập ngày sinh hợp lệ')
+      isValid = false
+    }
+    if (hobbies.length == 0) {
+      setWarnHobbies('Vui lòng chọn ít nhất một sở thích')
+      isValid = false
+    }
+    return isValid
+  }
+
+  const onSubmit = async () => {
+    if (checkValidInput()) {
+    }
   }
 
   const renderTopProfile = () => {
@@ -114,9 +143,35 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
     )
   }
 
-  const renderSlogan = () => {
+  const renderGender = () => {
     return (
       <View style={{ width: '100%', marginTop: 20 }}>
+        <Text preset='bold' text="Giới tính" style={{}} />
+        <ScrollView style={{}} horizontal={true} showsHorizontalScrollIndicator={false}>
+          <TouchableOpacity onPress={()=>setGender(0)} style={TOUCH_GENDER}>
+            <Icon type="material-community" name={gender==0 ? "check-circle-outline" : "circle-outline"} size={20} />
+            <Text text="Nữ" style={{marginLeft: 3}}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>setGender(1)} style={TOUCH_GENDER}>
+            <Icon type="material-community" name={gender==1 ? "check-circle-outline" : "circle-outline"} size={20} />
+            <Text text="Nam" style={{marginLeft: 3}}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>setGender(2)} style={TOUCH_GENDER}>
+            <Icon type="material-community" name={gender==2 ? "check-circle-outline" : "circle-outline"} size={20} />
+            <Text text="Đồng tính nữ" style={{marginLeft: 3}}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>setGender(3)} style={TOUCH_GENDER}>
+            <Icon type="material-community" name={gender==3 ? "check-circle-outline" : "circle-outline"} size={20} />
+            <Text text="Đồng tính nam" style={{marginLeft: 3}}/>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+    )
+  }
+
+  const renderSlogan = () => {
+    return (
+      <View style={{ width: '100%', marginTop: 15 }}>
         <Text preset='bold' text="Châm ngôn sống" style={{}} />
         <View style={VIEW_INPUT_MULTI}>
           <TextInput placeholder="Nhập châm ngôn" value={slogan} onChangeText={value => setSlogan(value)} style={INPUT_MULTI} multiline={true} />
@@ -168,7 +223,7 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
                 <Divider />
               </View>
             )} />
-          <ButtonMain onPress={()=>setVisibleChooseTitles(false)} text="Xong" style={{marginVertical: 10, width: '60%', alignSelf: 'center'}} />
+          <ButtonMain onPress={() => setVisibleChooseTitles(false)} text="Xong" style={{ marginVertical: 10, width: '60%', alignSelf: 'center' }} />
         </View>
       </Popup>
     )
@@ -187,7 +242,7 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
   const renderHobbies = () => {
     return (
       <View style={{ marginTop: 20, width: '100%' }}>
-        <Text preset='bold' text="Sở thích" style={{}} />
+        <Text preset='bold' text="Sở thích (*)" style={{}} />
         <View style={{ width: '100%' }}>
           <FlatList
             scrollEnabled={false}
@@ -214,7 +269,7 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
   const renderButton = () => {
     return (
       <View style={{ width: '80%', marginTop: 30, alignSelf: 'center' }}>
-        <ButtonMain text="Lưu" />
+        <ButtonMain onPress={onSubmit} text="Lưu" />
         <ButtonMain onPress={() => requestGoBack()} type={2} text="Hủy" style={{ marginTop: 10 }} />
       </View>
     )
@@ -225,15 +280,17 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
       <ButtonClose />
       {renderTopProfile()}
       {renderName()}
+      <WarnText text={warnName} />
       {renderBirthday()}
+      <WarnText text={warnBirthday} />
+      {renderGender()}
       {renderSlogan()}
       {renderTitle()}
-      {/* Popup choose titles */}
       {renderPopupChooseTitles()}
       {renderHobbies()}
+      <WarnText text={warnHobbies} />
       {renderEmail()}
       {renderButton()}
-      {/* Popup show image */}
       <ImageView images={[{ uri: avatar }]} imageIndex={0} visible={visibleViewing} onRequestClose={() => setVisibleViewing(false)} />
     </Screen>
   )
