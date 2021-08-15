@@ -139,6 +139,30 @@ class Api {
   }
 
   /**
+   * Get titles
+   */
+  async getTitles(params: any): Promise<any> {
+    if (params.showLoading)
+      rootStoreRef.appStore.showLoading()
+    const response: ApiResponse<any> = await this.apisauce.get(`/titles/all`)
+    rootStoreRef.appStore.hideLoading()
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      console.log('hieunv', 'getTitles_problem', problem);
+      if (problem) return problem
+    }
+    try {
+      const res: any = response.data
+      rootStoreRef.generalStore.saveTitles(res)
+      console.log('hieunv', 'getTitles_res', res);
+      return { kind: "ok", data: res }
+    } catch (error) {
+      console.log('hieunv', 'getTitles_error', error);
+      return { kind: "bad-data" }
+    }
+  }
+
+  /**
    * Get Profile
    */
   async getProfile(params: any): Promise<any> {

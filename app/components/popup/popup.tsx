@@ -3,6 +3,7 @@ import { View, ViewStyle } from "react-native"
 import { Icon } from "react-native-elements"
 import Modal from 'react-native-modal'
 import { Text } from "../"
+import metrics from "../../theme/metrics"
 
 const CONTAINER: ViewStyle = {
   backgroundColor: 'white',
@@ -10,14 +11,14 @@ const CONTAINER: ViewStyle = {
 }
 
 export interface PopupProps {
-  children?: any, isVisible: boolean, onClosePress: any, title?: string
+  children?: any, isVisible: boolean, onClosePress: any, title?: string, style?: ViewStyle
 }
 
 export function Popup(props: PopupProps) {
-  const { children, isVisible = false, onClosePress, title = 'Thông báo' } = props
+  const { children=null, isVisible = false, onClosePress, title = 'Thông báo', style } = props
 
   return (
-    <Modal isVisible={isVisible} onBackdropPress={onClosePress} animationInTiming={1} animationOutTiming={1}>
+    <Modal isVisible={isVisible} onBackdropPress={onClosePress} style={[{maxHeight: metrics.screenHeight*0.9},style]} animationInTiming={1} animationOutTiming={1}>
       <View style={CONTAINER}>
         {/* Header */}
         <View style={{ flexDirection: 'row', backgroundColor: "#00D6D6", height: 40, borderTopLeftRadius: 10, borderTopRightRadius: 10, alignItems: 'center', paddingHorizontal: 8 }}>

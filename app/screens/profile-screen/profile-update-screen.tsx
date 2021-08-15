@@ -5,7 +5,7 @@ import { Divider } from "react-native-elements/dist/divider/Divider"
 import { Icon } from "react-native-elements/dist/icons/Icon"
 import ImageView from 'react-native-image-viewing'
 import { rootStoreRef } from "../../app"
-import { Screen, Text } from "../../components"
+import { Popup, Screen, Text } from "../../components"
 import { ButtonClose } from "../../components/button/button-close"
 import { ButtonMain } from "../../components/button/button-main"
 import { CategoryItem } from "../../components/common/category-item"
@@ -42,8 +42,9 @@ const INPUT_MULTI: TextStyle = {
 
 export const ProfileUpdateScreen = observer(function ProfileScreen() {
 
-  const {profile} = rootStoreRef.profileStore
-  const {categories} = rootStoreRef.generalStore
+  const { profile } = rootStoreRef.profileStore
+  const categories = rootStoreRef.generalStore.categories || []
+  const generalTitles = rootStoreRef.generalStore.generalTitles || []
 
   const [avatar, setAvatar] = useState("");
   const [name, setName] = useState("");
@@ -55,6 +56,7 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
   const [hobbies, setHobbies] = useState([]);
   const [email, setEmail] = useState("");
   const [visibleViewing, setVisibleViewing] = useState(false);
+  const [isVisibleChooseTitles, setVisibleChooseTitles] = useState(false);
 
   useEffect(() => {
     setAvatar(profile.avatar)
@@ -66,10 +68,12 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
     setTitleList(profile.title_list)
     setHobbies([...profile.hobbies])
     setEmail(profile.email)
+    onRefresh()
   }, [])
 
   async function onRefresh() {
     await api.getCategories({ showLoading: false })
+    await api.getTitles({ showLoading: false })
   }
 
   const renderTopProfile = () => {
@@ -112,7 +116,7 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
 
   const renderSlogan = () => {
     return (
-      <View style={{width: '100%', marginTop: 20}}>
+      <View style={{ width: '100%', marginTop: 20 }}>
         <Text preset='bold' text="Châm ngôn sống" style={{}} />
         <View style={VIEW_INPUT_MULTI}>
           <TextInput placeholder="Nhập châm ngôn" value={slogan} onChangeText={value => setSlogan(value)} style={INPUT_MULTI} multiline={true} />
@@ -125,8 +129,8 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
     return (
       <View style={{ marginTop: 20 }}>
         <Text preset='bold' text="Danh hiệu" style={{}} />
-        <TouchableOpacity style={VIEW_INPUT_MULTI}>
-          <TitlesItem title_list={profile?.title_list} style={{flexGrow: 1}}/>
+        <TouchableOpacity onPress={() => setVisibleChooseTitles(true)} style={VIEW_INPUT_MULTI}>
+          <TitlesItem title_list={profile?.title_list} style={{ flexGrow: 1 }} />
           <Icon type="ionicon" name="search-outline" size={16} />
         </TouchableOpacity>
       </View>
@@ -178,6 +182,29 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
     )
   }
 
+  const renderPopupChooseTitles = () => {
+    console.log('hieunv', 'titles', [...generalTitles]);
+    return (
+      <Popup isVisible={isVisibleChooseTitles} title="Chọn danh hiệu" onClosePress={() => setVisibleChooseTitles(false)}>
+        <View style={{ width: '100%'}}>
+          <FlatList
+            scrollEnabled={false}
+            keyExtractor={(item) => String(item._id)}
+            data={[...generalTitles]}
+            renderItem={({ item, index }) => (
+              <View style={{width: '100%', paddingHorizontal: '5%'}}>
+                <TouchableOpacity style={{paddingVertical: 10, flexDirection: 'row', alignItems: 'center'}}>
+                  <Icon type="material" name="check-box-outline-blank" size={16} />
+                  <Text style={{ color: item?.textColor, marginStart: 5 }}>{item?.name}</Text>
+                </TouchableOpacity>
+                <Divider/>
+              </View>
+            )} />
+        </View>
+      </Popup>
+    )
+  }
+
   return (
     <Screen style={ROOT} preset="scroll" onRefresh={onRefresh}>
       <ButtonClose />
@@ -189,6 +216,8 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
       {renderHobbies()}
       {renderEmail()}
       {renderButton()}
+      {/* Popup choose titles */}
+      {renderPopupChooseTitles()}
       {/* Popup show image */}
       <ImageView images={[{ uri: avatar }]} imageIndex={0} visible={visibleViewing} onRequestClose={() => setVisibleViewing(false)} />
     </Screen>
