@@ -64,8 +64,8 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
     setBirthday(convertDateToString(profile.birthday))
     setGender(profile.gender)
     setSlogan(profile.slogan)
-    setTitles(profile.titles)
-    setTitleList(profile.title_list)
+    setTitles([...profile.titles])
+    setTitleList([...profile.title_list])
     setHobbies([...profile.hobbies])
     setEmail(profile.email)
     onRefresh()
@@ -130,18 +130,56 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
       <View style={{ marginTop: 20 }}>
         <Text preset='bold' text="Danh hiệu" style={{}} />
         <TouchableOpacity onPress={() => setVisibleChooseTitles(true)} style={VIEW_INPUT_MULTI}>
-          <TitlesItem title_list={profile?.title_list} style={{ flexGrow: 1 }} />
-          <Icon type="ionicon" name="search-outline" size={16} />
+          <TitlesItem title_list={titleList} style={{ flexGrow: 1 }} />
+          <Icon type="ionicon" name="search-outline" size={16} containerStyle={{ position: 'absolute', right: 0 }} />
         </TouchableOpacity>
       </View>
     )
   }
 
+  const onPressTitle = (item) => {
+    if (!titles.includes(item.code)) {
+      titles.push(item.code)
+      titleList.push(item)
+    } else {
+      titles.splice(titles.indexOf(item.code), 1)
+      titleList.splice(titleList.indexOf(item), 1)
+    }
+    console.log('titles', 'titles', titles);
+    console.log('titleList', 'titleList', titleList);
+    setTitles([...titles])
+    setTitleList([...titleList])
+  }
+
+  const renderPopupChooseTitles = () => {
+    return (
+      <Popup isVisible={isVisibleChooseTitles} title="Chọn danh hiệu" onClosePress={() => setVisibleChooseTitles(false)}>
+        <View style={{ width: '100%' }}>
+          <FlatList
+            scrollEnabled={false}
+            keyExtractor={(item) => String(item._id)}
+            data={[...generalTitles]}
+            renderItem={({ item, index }) => (
+              <View style={{ width: '100%', paddingHorizontal: '5%' }}>
+                <TouchableOpacity onPress={() => onPressTitle(item)} style={{ paddingVertical: 10, flexDirection: 'row', alignItems: 'center' }}>
+                  <Icon type="material-community" name={titles.includes(item.code) ? "check-box-outline" : "checkbox-blank-outline"} size={16} />
+                  <Text style={{ color: item?.textColor, marginStart: 5 }}>{item?.name}</Text>
+                </TouchableOpacity>
+                <Divider />
+              </View>
+            )} />
+          <ButtonMain onPress={()=>setVisibleChooseTitles(false)} text="Xong" style={{marginVertical: 10, width: '60%', alignSelf: 'center'}} />
+        </View>
+      </Popup>
+    )
+  }
+
   const onPressCategory = (item) => {
-    if (!hobbies.includes(item.code))
+    if (!hobbies.includes(item.code)) {
       hobbies.push(item.code)
-    else
+    } else {
       hobbies.splice(hobbies.indexOf(item.code), 1)
+    }
     console.log('hieunv', 'hobbies', hobbies);
     setHobbies([...hobbies])
   }
@@ -182,29 +220,6 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
     )
   }
 
-  const renderPopupChooseTitles = () => {
-    console.log('hieunv', 'titles', [...generalTitles]);
-    return (
-      <Popup isVisible={isVisibleChooseTitles} title="Chọn danh hiệu" onClosePress={() => setVisibleChooseTitles(false)}>
-        <View style={{ width: '100%'}}>
-          <FlatList
-            scrollEnabled={false}
-            keyExtractor={(item) => String(item._id)}
-            data={[...generalTitles]}
-            renderItem={({ item, index }) => (
-              <View style={{width: '100%', paddingHorizontal: '5%'}}>
-                <TouchableOpacity style={{paddingVertical: 10, flexDirection: 'row', alignItems: 'center'}}>
-                  <Icon type="material" name="check-box-outline-blank" size={16} />
-                  <Text style={{ color: item?.textColor, marginStart: 5 }}>{item?.name}</Text>
-                </TouchableOpacity>
-                <Divider/>
-              </View>
-            )} />
-        </View>
-      </Popup>
-    )
-  }
-
   return (
     <Screen style={ROOT} preset="scroll" onRefresh={onRefresh}>
       <ButtonClose />
@@ -213,11 +228,11 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
       {renderBirthday()}
       {renderSlogan()}
       {renderTitle()}
+      {/* Popup choose titles */}
+      {renderPopupChooseTitles()}
       {renderHobbies()}
       {renderEmail()}
       {renderButton()}
-      {/* Popup choose titles */}
-      {renderPopupChooseTitles()}
       {/* Popup show image */}
       <ImageView images={[{ uri: avatar }]} imageIndex={0} visible={visibleViewing} onRequestClose={() => setVisibleViewing(false)} />
     </Screen>
