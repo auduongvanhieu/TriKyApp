@@ -25,6 +25,7 @@ class Api {
       },
     })
   }
+  // ________________________________________Auth________________________________________
 
   /**
    * Login
@@ -149,6 +150,30 @@ class Api {
       return { kind: "ok", data: res }
     } catch (error) {
       console.log('hieunv', 'getProfile_error', error);
+      return { kind: "bad-data" }
+    }
+  }
+
+  /**
+   * Update Profile
+   */
+  async updateProfile(params: any): Promise<any> {
+    rootStoreRef.appStore.showLoading()
+    const response: ApiResponse<any> = await this.apisauce.put(`/profile`, params)
+    rootStoreRef.appStore.hideLoading()
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      console.log('hieunv', 'updateProfile_problem', problem);
+      if (problem) return problem
+    }
+    try {
+      const res: any = response.data
+      rootStoreRef.profileStore.saveProfile(res)
+      console.log('hieunv', 'updateProfile_res', res);
+      rootStoreRef.appStore.showSuccessAlert({ description: "Cập nhật thành công" })
+      return { kind: "ok", data: res }
+    } catch (error) {
+      console.log('hieunv', 'updateProfile_error', error);
       return { kind: "bad-data" }
     }
   }

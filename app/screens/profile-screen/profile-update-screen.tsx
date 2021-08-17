@@ -17,7 +17,7 @@ import { requestGoBack } from "../../services/app-action/app-action"
 import { color } from "../../theme"
 import { images } from "../../theme/images"
 import metrics from "../../theme/metrics"
-import { convertDateToString, isValidDate } from "../../utils/functions"
+import { convertDateToString, convertStringToDate, isValidDate } from "../../utils/functions"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.white,
@@ -102,6 +102,20 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
 
   const onSubmit = async () => {
     if (checkValidInput()) {
+      let res = await api.updateProfile({
+        _id: profile._id,
+        avatar,
+        name,
+        birthday: convertStringToDate(birthday),
+        gender,
+        slogan,
+        titles,
+        hobbies,
+        email,
+      })
+      if (res.kind == 'ok') {
+        requestGoBack()
+      }
     }
   }
 
