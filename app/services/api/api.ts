@@ -1,12 +1,10 @@
-import { ApisauceInstance, create, ApiResponse } from "apisauce"
-import { getGeneralApiProblem } from "./api-problem"
-import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
-import * as Types from "./api.types"
+import { ApiResponse, ApisauceInstance, create } from "apisauce"
 import { rootStoreRef } from "../../app"
 import { requestReplace } from "../app-action/app-action"
+import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
+import { getGeneralApiProblem } from "./api-problem"
 
 class Api {
-  
   apisauce: ApisauceInstance
   config: ApiConfig
 
@@ -26,38 +24,6 @@ class Api {
         Authorization: authToken
       },
     })
-  }
-
-  async getUsers(): Promise<Types.GetUsersResult> {
-    const response: ApiResponse<any> = await this.apisauce.get(`/users`)
-    if (!response.ok) {
-      const problem = getGeneralApiProblem(response)
-      if (problem) return problem
-    }
-    const convertUser = (raw) => {
-      return { id: raw.id, name: raw.name, }
-    }
-    try {
-      const rawUsers = response.data
-      const resultUsers: Types.User[] = rawUsers.map(convertUser)
-      return { kind: "ok", users: resultUsers }
-    } catch {
-      return { kind: "bad-data" }
-    }
-  }
-
-  async getUser(id: string): Promise<Types.GetUserResult> {
-    const response: ApiResponse<any> = await this.apisauce.get(`/users/${id}`)
-    if (!response.ok) {
-      const problem = getGeneralApiProblem(response)
-      if (problem) return problem
-    }
-    try {
-      const resultUser: Types.User = { id: response.data.id, name: response.data.name, }
-      return { kind: "ok", user: resultUser }
-    } catch {
-      return { kind: "bad-data" }
-    }
   }
 
   /**

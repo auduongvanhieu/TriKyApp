@@ -2,10 +2,9 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import React, { useEffect } from "react"
-import { BackHandler, Platform, ToastAndroid, Image } from 'react-native'
+import { BackHandler, Image, Platform, ToastAndroid } from 'react-native'
 import {
-  AppointmentScreen, HomeScreen, LoginScreen, RegisterStep1Screen, RegisterStep2Screen, RegisterStep3Screen, SplashScreen, DemoScreen,
-  DemoListScreen, ChatScreen, SettingScreen, ProfileScreen
+  AppointmentScreen, ChatScreen, HomeScreen, LoginScreen, ProfileScreen, RegisterStep1Screen, RegisterStep2Screen, RegisterStep3Screen, SettingScreen, SplashScreen
 } from "../screens"
 import { ProfileUpdateScreen } from '../screens/profile-screen/profile-update-screen'
 import { AppAction } from '../services/app-action/app-action'
@@ -67,8 +66,6 @@ const RootStack = () => {
       <Stack.Screen name="registerStep2" component={RegisterStep2Screen} />
       <Stack.Screen name="registerStep3" component={RegisterStep3Screen} />
       <Stack.Screen name="main" component={MainTabs} />
-      <Stack.Screen name="demo" component={DemoScreen} />
-      <Stack.Screen name="demoList" component={DemoListScreen} />
       <Stack.Screen name="profile" component={ProfileScreen} />
       <Stack.Screen name="profileUpdate" component={ProfileUpdateScreen} />
     </Stack.Navigator>
