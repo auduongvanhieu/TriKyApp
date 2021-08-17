@@ -6,11 +6,12 @@ import { Icon } from "react-native-elements/dist/icons/Icon"
 import ImageView from 'react-native-image-viewing'
 import TextInputMask from 'react-native-text-input-mask'
 import { rootStoreRef } from "../../app"
-import { Popup, Screen, Text } from "../../components"
+import { Popup, Text } from "../../components"
 import { ButtonClose } from "../../components/button/button-close"
 import { ButtonMain } from "../../components/button/button-main"
 import { CategoryItem } from "../../components/common/category-item"
 import { TitlesItem } from "../../components/common/titles-item"
+import { ScreenAware } from "../../components/screen/screen-aware"
 import { WarnText } from "../../components/text/warn-text"
 import { api } from "../../services/api"
 import { requestGoBack } from "../../services/app-action/app-action"
@@ -290,7 +291,7 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
   }
 
   return (
-    <Screen style={ROOT} preset="scroll" onRefresh={onRefresh}>
+    <ScreenAware style={ROOT} preset="scroll" onRefresh={onRefresh} >
       <ButtonClose />
       {renderTopProfile()}
       {renderName()}
@@ -306,6 +307,6 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
       {renderEmail()}
       {renderButton()}
       <ImageView images={[{ uri: avatar }]} imageIndex={0} visible={visibleViewing} onRequestClose={() => setVisibleViewing(false)} />
-    </Screen>
+    </ScreenAware>
   )
 })
