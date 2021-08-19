@@ -45,9 +45,9 @@ class Api {
       const res: any = response.data
       console.log('hieunv', 'login_res', res);
       rootStoreRef.appStore.showSuccessAlert({ description: "Đăng nhập thành công" })
-      rootStoreRef.authStore.saveToken(res?.token)
-      rootStoreRef.profileStore.saveProfile(res?.user)
-      return { kind: "ok", data: res }
+      rootStoreRef.authStore.saveToken(res?.data?.token)
+      rootStoreRef.profileStore.saveProfile(res?.data?.user)
+      return { kind: "ok", data: res?.data }
     } catch (error) {
       console.log('hieunv', 'login_error', error);
       return { kind: "bad-data" }
@@ -72,9 +72,9 @@ class Api {
       const res: any = response.data
       console.log('hieunv', 'register_res', res);
       rootStoreRef.appStore.showSuccessAlert({ description: "Đăng ký thành công" })
-      rootStoreRef.authStore.saveToken(res?.token)
-      rootStoreRef.profileStore.saveProfile(res?.user)
-      return { kind: "ok", data: res }
+      rootStoreRef.authStore.saveToken(res?.data?.token)
+      rootStoreRef.profileStore.saveProfile(res?.data?.user)
+      return { kind: "ok", data: res?.data }
     } catch (error) {
       console.log('hieunv', 'register_error', error);
       return { kind: "bad-data" }
@@ -96,9 +96,9 @@ class Api {
     }
     try {
       const res: any = response.data
-      rootStoreRef.generalStore.saveCategories(res)
-      console.log('hieunv', 'getCategories_res', res);
-      return { kind: "ok", data: res }
+      rootStoreRef.generalStore.saveCategories(res?.data)
+      console.log('hieunv', 'getCategories_res', res?.data);
+      return { kind: "ok", data: res?.data }
     } catch (error) {
       console.log('hieunv', 'getCategories_error', error);
       return { kind: "bad-data" }
@@ -120,9 +120,9 @@ class Api {
     }
     try {
       const res: any = response.data
-      rootStoreRef.generalStore.saveTitles(res)
-      console.log('hieunv', 'getTitles_res', res);
-      return { kind: "ok", data: res }
+      rootStoreRef.generalStore.saveTitles(res?.data)
+      console.log('hieunv', 'getTitles_res', res?.data);
+      return { kind: "ok", data: res?.data }
     } catch (error) {
       console.log('hieunv', 'getTitles_error', error);
       return { kind: "bad-data" }
@@ -145,9 +145,9 @@ class Api {
     }
     try {
       const res: any = response.data
-      rootStoreRef.profileStore.saveProfile(res)
-      console.log('hieunv', 'getProfile_res', res);
-      return { kind: "ok", data: res }
+      rootStoreRef.profileStore.saveProfile(res?.data)
+      console.log('hieunv', 'getProfile_res', res?.data);
+      return { kind: "ok", data: res?.data }
     } catch (error) {
       console.log('hieunv', 'getProfile_error', error);
       return { kind: "bad-data" }
@@ -168,10 +168,10 @@ class Api {
     }
     try {
       const res: any = response.data
-      rootStoreRef.profileStore.saveProfile(res)
-      console.log('hieunv', 'updateProfile_res', res);
+      rootStoreRef.profileStore.saveProfile(res?.data)
+      console.log('hieunv', 'updateProfile_res', res?.data);
       rootStoreRef.appStore.showSuccessAlert({ description: "Cập nhật thành công" })
-      return { kind: "ok", data: res }
+      return { kind: "ok", data: res?.data }
     } catch (error) {
       console.log('hieunv', 'updateProfile_error', error);
       return { kind: "bad-data" }
