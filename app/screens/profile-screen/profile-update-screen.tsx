@@ -19,6 +19,7 @@ import { color } from "../../theme"
 import { images } from "../../theme/images"
 import metrics from "../../theme/metrics"
 import { convertDateToString, convertStringToDate, isValidDate } from "../../utils/functions"
+import { launchCamera, launchImageLibrary } from "react-native-image-picker"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.white,
