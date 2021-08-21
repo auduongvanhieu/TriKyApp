@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Text, View } from "react-native"
+import { color } from "../../theme"
 
 export function TitlesItem({ style={}, title_list,}) {
   return (
@@ -11,6 +12,7 @@ export function TitlesItem({ style={}, title_list,}) {
           <Text style={{ color: item?.textColor, fontStyle: 'italic' }}>{item?.name}, </Text> 
         )
       })}
+      {title_list && title_list.length==0 && <Text style={{color: color.textHolder}}>Chưa có danh hiệu</Text>}
     </View>
   )
 }
