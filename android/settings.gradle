@@ -1,4 +1,4 @@
-rootProject.name = 'TriKy'
+rootProject.name = 'TriKyApp'
 // Unimodules https://docs.expo.io/bare/installing-unimodules/#configuration-for-android
 apply from: '../node_modules/react-native-unimodules/gradle.groovy'; includeUnimodulesProjects()
 

@@ -10,5 +10,5 @@
 import App from "./app/app.tsx"
 import { AppRegistry } from "react-native"
 
-AppRegistry.registerComponent("TriKy", () => App)
+AppRegistry.registerComponent("TriKyApp", () => App)
 export default App

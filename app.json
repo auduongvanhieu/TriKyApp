@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "TriKy",
-    "slug": "TriKy",
+    "name": "TriKyApp",
+    "slug": "TriKyApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

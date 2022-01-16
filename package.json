@@ -1,5 +1,5 @@
 {
-  "name": "tri-ky",
+  "name": "tri-ky-app",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -41,8 +41,8 @@
     "mobx-react-lite": "3.2.0",
     "mobx-state-tree": "5.0.1",
     "numeral": "^2.0.6",
-    "react": "17.0.2",
-    "react-native": "0.66.4",
+    "react": "17.0.1",
+    "react-native": "0.64.1",
     "react-native-dropdownalert": "^4.3.0",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "1.10.3",
@@ -132,14 +132,14 @@
     "test-runner": "jest",
     "configurations": {
       "ios.sim.debug": {
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/triky.app",
-        "build": "xcodebuild -workspace ios/TriKy.xcworkspace -scheme TriKy -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 11'",
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/trikyapp.app",
+        "build": "xcodebuild -workspace ios/TriKyApp.xcworkspace -scheme TriKyApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 11'",
         "type": "ios.simulator",
         "name": "iPhone 11"
       },
       "ios.sim.release": {
-        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/TriKy.app",
-        "build": "xcodebuild -workspace ios/TriKy.xcworkspace -scheme TriKy -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 11'",
+        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/TriKyApp.app",
+        "build": "xcodebuild -workspace ios/TriKyApp.xcworkspace -scheme TriKyApp -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -destination 'name=iPhone 11'",
         "type": "ios.simulator",
         "name": "iPhone 11"
       }
