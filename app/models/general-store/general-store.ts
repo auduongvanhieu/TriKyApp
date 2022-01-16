@@ -1,11 +1,13 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { withEnvironment } from "../extensions/with-environment"
+import { CategoryModel } from "./category-model"
+import { TitleModel } from "./title-model"
 const t = types
 export const GeneralStoreModel = types
   .model("GeneralStore")
   .props({
-    categories: types.optional(types.array(types.model({ _id: types.number, code: types.string, name: types.string, bgColor: types.string, textColor: types.string, icon: types.string })), []),
-    generalTitles: types.optional(t.array(t.model({ _id: t.number, code: t.string, name: t.string, textColor: t.string })), [])
+    categories: types.optional(types.array(CategoryModel), []),
+    generalTitles: types.optional(t.array(TitleModel), [])
   })
   .extend(withEnvironment)
   .actions((self) => ({
