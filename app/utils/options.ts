@@ -1,8 +1,15 @@
-export const chooseImageOptions = {
-  mediaType    : "photo",
-  maxWidth: 1024,
-  maxHeight: 1024,
-  quality: 1.0,
-  cameraType  : "back",
-  includeBase64: false
+export const takeImageOptions: any = {
+  saveToPhotos: true,
+  mediaType: 'photo',
+  includeBase64: false,
+  includeExtra: true,
+};
+
+export const chooseImageOptions: any = {
+  maxHeight: 200,
+  maxWidth: 200,
+  selectionLimit: 0,
+  mediaType: 'photo',
+  includeBase64: false,
+  includeExtra: true,
 };

@@ -19,7 +19,8 @@ import { color } from "../../theme"
 import { images } from "../../theme/images"
 import metrics from "../../theme/metrics"
 import { convertDateToString, convertStringToDate, isValidDate } from "../../utils/functions"
-import { launchCamera, launchImageLibrary } from "react-native-image-picker"
+import { launchCamera, launchImageLibrary, ImagePickerResponse } from "react-native-image-picker"
+import { chooseImageOptions } from "../../utils/options"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.white,
@@ -121,6 +122,24 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
     }
   }
 
+  const onTakeImage = async () =>{
+    const result = await launchCamera(chooseImageOptions);
+    handleImage(result)
+  }
+
+  const onChooseImage = async () =>{
+    const result = await launchImageLibrary(chooseImageOptions);
+    handleImage(result)
+  }
+
+  const handleImage = (response: ImagePickerResponse) => {
+    console.log('hieunv', 'onChooseImageResponse', response);
+    if(response?.assets?.length > 0){
+      const imageRes = response.assets[0]
+      console.log('hieunv', 'imageRes', imageRes);
+    }
+  }
+
   const renderTopProfile = () => {
     return (
       <View style={{ flexDirection: 'row', marginTop: 40 }}>
@@ -128,13 +147,13 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
           <Image source={{ uri: profile?.avatar }} defaultSource={images.img_avatar_default} style={{ width: 65, height: 65, borderRadius: 32.5, backgroundColor: color.bgImage }} />
         </TouchableOpacity>
         <View style={{ flex: 1, marginStart: 10 }}>
-          <TouchableOpacity style={{ backgroundColor: color.main, paddingVertical: 5, paddingHorizontal: 8, borderRadius: 4, width: '80%', flexDirection: 'row', alignItems: 'center' }}>
-            <Icon type="feather" name="camera" size={16} color="white" />
-            <Text text="Chụp ảnh" style={{ color: 'white', marginStart: 5 }} />
+          <TouchableOpacity onPress={onTakeImage} style={{ backgroundColor: color.main, paddingVertical: 5, paddingHorizontal: 8, borderRadius: 4, width: '80%', flexDirection: 'row', alignItems: 'center' }}>
+            <Icon type="feather" name="camera" size={16} color="black" />
+            <Text text="Chụp ảnh" style={{ color: 'black', marginStart: 5 }} />
           </TouchableOpacity>
-          <TouchableOpacity style={{ backgroundColor: color.main, paddingVertical: 5, paddingHorizontal: 8, borderRadius: 4, width: '80%', flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
-            <Icon type="entypo" name="images" size={16} color="white" />
-            <Text text="Chọn ảnh từ thư viện" style={{ color: 'white', marginStart: 5 }} />
+          <TouchableOpacity onPress={onChooseImage} style={{ backgroundColor: color.main, paddingVertical: 5, paddingHorizontal: 8, borderRadius: 4, width: '80%', flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+            <Icon type="entypo" name="images" size={16} color="black" />
+            <Text text="Chọn ảnh từ thư viện" style={{ color: 'black', marginStart: 5 }} />
           </TouchableOpacity>
         </View>
       </View>
