@@ -141,7 +141,7 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
             var fileExt = res.path.split('.')
             var fileName = `avatar_${profile._id}` + moment().format("_YYYY_MM_DD_HH_mm_ss.") + fileExt[fileExt.length - 1]
           }
-          data.append("file", {
+          data.append("files", {
             name: fileName,
             type: "image/*",
             uri: Platform.OS === "android" ? res.uri : res.uri.replace("file://", "/private")
