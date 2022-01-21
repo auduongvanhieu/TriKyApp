@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useState } from "react"
-import { FlatList, Image, ScrollView, TextInput, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
+import { FlatList, Image, Platform, ScrollView, TextInput, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { Divider } from "react-native-elements/dist/divider/Divider"
 import { Icon } from "react-native-elements/dist/icons/Icon"
 import ImageView from 'react-native-image-viewing'
@@ -21,6 +21,8 @@ import metrics from "../../theme/metrics"
 import { convertDateToString, convertStringToDate, isValidDate } from "../../utils/functions"
 import { launchCamera, launchImageLibrary, ImagePickerResponse } from "react-native-image-picker"
 import { chooseImageOptions } from "../../utils/options"
+import ImageResizer from 'react-native-image-resizer';
+import moment from "moment"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.white,
@@ -105,38 +107,54 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
 
   const onSubmit = async () => {
     if (checkValidInput()) {
-      let res = await api.updateProfile({
-        _id: profile._id,
-        avatar,
-        name,
-        birthday: convertStringToDate(birthday),
-        gender,
-        slogan,
-        titles,
-        hobbies,
-        email,
-      })
+      let res = await api.updateProfile({ _id: profile._id, avatar, name, birthday: convertStringToDate(birthday), gender, slogan, titles, hobbies, email, })
       if (res.kind == 'ok') {
         requestGoBack()
       }
     }
   }
 
-  const onTakeImage = async () =>{
+  const onTakeImage = async () => {
     const result = await launchCamera(chooseImageOptions);
     handleImage(result)
   }
 
-  const onChooseImage = async () =>{
+  const onChooseImage = async () => {
     const result = await launchImageLibrary(chooseImageOptions);
     handleImage(result)
   }
 
   const handleImage = (response: ImagePickerResponse) => {
     console.log('hieunv', 'onChooseImageResponse', response);
-    if(response?.assets?.length > 0){
+    if (response?.assets?.length > 0) {
       const imageRes = response.assets[0]
       console.log('hieunv', 'imageRes', imageRes);
+      ImageResizer.createResizedImage(imageRes.uri, imageRes.width, imageRes.height, 'PNG', 100, 0, null)
+        .then(async res => {
+          const data = new FormData();
+          console.log('hieunv', 'createResizedImage', { ...res, data: 'data' })
+          var fileName = ''
+          if (Platform.OS == 'android') {
+            var fileExt = res.path.split('.')
+            var fileName = `avatar_${profile._id}`+ moment().format("_YYYY_MM_DD_HH_mm_ss.") + fileExt[fileExt.length - 1]
+          } else {
+            var fileExt = res.path.split('.')
+            var fileName = `avatar_${profile._id}` + moment().format("_YYYY_MM_DD_HH_mm_ss.") + fileExt[fileExt.length - 1]
+          }
+          data.append("file", {
+            name: fileName,
+            type: "image/*",
+            uri: Platform.OS === "android" ? res.uri : res.uri.replace("file://", "/private")
+          });
+          console.log('hieunv', 'fileName', fileName)
+          console.log('hieunv', 'response.uri', res.uri)
+          // Up hình lên server
+          let uploadFilesRes = await api.uploadFiles(data)
+          console.log('hieunv', 'uploadFilesRes', uploadFilesRes);
+        })
+        .catch(err => {
+          console.log('hieunv', 'createResizedImageError', err)
+        });
     }
   }
 
@@ -183,21 +201,21 @@ export const ProfileUpdateScreen = observer(function ProfileScreen() {
       <View style={{ width: '100%', marginTop: 20 }}>
         <Text preset='bold' text="Giới tính" style={{}} />
         <ScrollView style={{}} horizontal={true} showsHorizontalScrollIndicator={false}>
-          <TouchableOpacity onPress={()=>setGender(0)} style={TOUCH_GENDER}>
-            <Icon type="material-community" name={gender==0 ? "check-circle-outline" : "circle-outline"} size={20} />
-            <Text text="Nữ" style={{marginLeft: 3}}/>
+          <TouchableOpacity onPress={() => setGender(0)} style={TOUCH_GENDER}>
+            <Icon type="material-community" name={gender == 0 ? "check-circle-outline" : "circle-outline"} size={20} />
+            <Text text="Nữ" style={{ marginLeft: 3 }} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>setGender(1)} style={TOUCH_GENDER}>
-            <Icon type="material-community" name={gender==1 ? "check-circle-outline" : "circle-outline"} size={20} />
-            <Text text="Nam" style={{marginLeft: 3}}/>
+          <TouchableOpacity onPress={() => setGender(1)} style={TOUCH_GENDER}>
+            <Icon type="material-community" name={gender == 1 ? "check-circle-outline" : "circle-outline"} size={20} />
+            <Text text="Nam" style={{ marginLeft: 3 }} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>setGender(2)} style={TOUCH_GENDER}>
-            <Icon type="material-community" name={gender==2 ? "check-circle-outline" : "circle-outline"} size={20} />
-            <Text text="Đồng tính nữ" style={{marginLeft: 3}}/>
+          <TouchableOpacity onPress={() => setGender(2)} style={TOUCH_GENDER}>
+            <Icon type="material-community" name={gender == 2 ? "check-circle-outline" : "circle-outline"} size={20} />
+            <Text text="Đồng tính nữ" style={{ marginLeft: 3 }} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>setGender(3)} style={TOUCH_GENDER}>
-            <Icon type="material-community" name={gender==3 ? "check-circle-outline" : "circle-outline"} size={20} />
-            <Text text="Đồng tính nam" style={{marginLeft: 3}}/>
+          <TouchableOpacity onPress={() => setGender(3)} style={TOUCH_GENDER}>
+            <Icon type="material-community" name={gender == 3 ? "check-circle-outline" : "circle-outline"} size={20} />
+            <Text text="Đồng tính nam" style={{ marginLeft: 3 }} />
           </TouchableOpacity>
         </ScrollView>
       </View>

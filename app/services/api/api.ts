@@ -25,8 +25,8 @@ class Api {
       },
     })
   }
-  // ________________________________________Auth________________________________________
 
+  // ________________________________________ Auth ________________________________________ //
   /**
    * Login
    */
@@ -81,6 +81,7 @@ class Api {
     }
   }
 
+  // ________________________________________ General ________________________________________ //
   /**
    * Get categories
    */
@@ -130,6 +131,30 @@ class Api {
   }
 
   /**
+   * Upload file
+   */
+  async uploadFiles(params: any): Promise<any> {
+    if (params.showLoading)
+      rootStoreRef.appStore.showLoading()
+    const response: ApiResponse<any> = await this.apisauce.post(`/upfiles`, params, { headers: { 'Content-Type': 'multipart/form-data;' } })
+    rootStoreRef.appStore.hideLoading()
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      console.log('hieunv', 'uploadFile_problem', problem);
+      if (problem) return problem
+    }
+    try {
+      const res: any = response.data
+      console.log('hieunv', 'getTitles_res', res?.data);
+      return { kind: "ok", data: res?.data }
+    } catch (error) {
+      console.log('hieunv', 'getTitles_error', error);
+      return { kind: "bad-data" }
+    }
+  }
+
+  // ________________________________________ Profile ________________________________________ //
+  /**
    * Get Profile
    */
   async getProfile(params: any): Promise<any> {
@@ -138,7 +163,7 @@ class Api {
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
       console.log('hieunv', 'getProfile_problem', problem);
-      if(problem?.kind=="unauthorized"){
+      if (problem?.kind == "unauthorized") {
         requestReplace("login")
       }
       if (problem) return problem
